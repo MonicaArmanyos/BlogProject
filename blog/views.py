@@ -1,8 +1,6 @@
 from django.shortcuts import render
-
-from .models import Categories
-
+from . import models
 
 def homepage(request):
-    context = {"homepage": Categories.objects.all()}
-    return render(request, "homepage/homepage.html", context)
+    context = {'homepage': models.Categories.objects.all()}
+    return render(request, 'homepage/homepage.html', context)
