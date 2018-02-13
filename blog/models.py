@@ -58,7 +58,7 @@ class Likes(models.Model):
 
 class Tags(models.Model):
 	tag_name=models.CharField(max_length = 15)
-	post = models.ForeignKey(Posts)
+	post = models.ManyToManyField(Posts)
 	def __str__(self):
 		return self.tag_name
 
