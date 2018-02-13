@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BlogProject',#database name
-        #'USER':'phpmyadmin',   # kol wa7ed yekteb his own user and password
-        #'PASSWORD':'BatSwagYall',
+        'USER':'root',   # kol wa7ed yekteb his own user and password
+        'PASSWORD':'01200882344na',
         'HOST':'localhost',#default host
         'PORT':'3306'#default port
     }

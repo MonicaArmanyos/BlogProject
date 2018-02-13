@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Categories
+
+
+def homepage(request):
+    context = {"homepage": Categories.objects.all()}
+    return render(request, "homepage/homepage.html", context)

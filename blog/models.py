@@ -1,18 +1,6 @@
 from datetime import datetime
 from django.db import models
-
-
-class Users(models.Model):
-	user_name = models.CharField(max_length = 50)
-	email=models.EmailField(max_length = 60)
-	password=models.CharField(max_length = 10)
-	created_at=models.DateField(default=datetime.now, blank=True)
-	is_admin=models.BooleanField()
-	is_blocked=models.BooleanField()
-	def __str__(self):
-		return self.user_name
-
-
+from django.contrib.auth.models import User
 
 
 
@@ -28,7 +16,7 @@ class Posts(models.Model):
 	picture=models.ImageField()
 	content=models.CharField(max_length = 200)
 	user = models.ForeignKey(User)
-	category=models.ForeignKey(Category)
+	category=models.ForeignKey(Categories)
 	def __str__(self):
 		return self.title
 
@@ -58,7 +46,7 @@ class Likes(models.Model):
 
 class Tags(models.Model):
 	tag_name=models.CharField(max_length = 15)
-	post = models.ForeignKey(Posts)
+	post = models.ManyToManyField(Posts)
 	def __str__(self):
 		return self.tag_name
 
@@ -67,4 +55,3 @@ class ForbiddenWords(models.Model):
 	word=models.CharField(max_length = 15)
 	def __str__(self):
 		return self.word
-
