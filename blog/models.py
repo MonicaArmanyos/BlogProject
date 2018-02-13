@@ -18,7 +18,7 @@ class Users(models.Model):
 
 class Categories(models.Model):
 	category_name=models.CharField(max_length = 50)
-	user = models.ManyToManyField(User)
+	user = models.ManyToManyField(Users)
 	def __str__(self):
 		return self.category_name
 
@@ -27,15 +27,15 @@ class Posts(models.Model):
 	created_at = models.DateField(default=datetime.now, blank=True)
 	picture=models.ImageField()
 	content=models.CharField(max_length = 200)
-	user = models.ForeignKey(User)
-	category=models.ForeignKey(Category)
+	user = models.ForeignKey(Users)
+	category=models.ForeignKey(Categories)
 	def __str__(self):
 		return self.title
 
 
 class Comments(models.Model):
 	text=models.CharField(max_length = 200)
-	user = models.ForeignKey(User)
+	user = models.ForeignKey(Users)
 	post=models.ForeignKey(Posts)
 	def __str__(self):
 		return self.content
@@ -43,7 +43,7 @@ class Comments(models.Model):
 
 class Replies(models.Model):
 	text = models.CharField(max_length=200)
-	user = models.ForeignKey(User)
+	user = models.ForeignKey(Users)
 	comment=models.ForeignKey(Comments)
 	def __str__(self):
 		return self.text
