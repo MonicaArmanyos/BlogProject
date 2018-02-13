@@ -56,7 +56,7 @@ ROOT_URLCONF = 'BlogProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "blog/templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,6 +69,33 @@ TEMPLATES = [
     },
 ]
 
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+]
+
+
+AUTH_PASSWORD_VALIDATORS = [
+{
+    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+},
+{
+    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+},
+{
+    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+},
+{
+    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+},
+{   'NAME': 'registration.validators.CustomPasswortValidator',
+
+},]
+
 WSGI_APPLICATION = 'BlogProject.wsgi.application'
 
 
@@ -78,9 +105,9 @@ WSGI_APPLICATION = 'BlogProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'BlogProject',#database name
-        #'USER':'phpmyadmin',   # kol wa7ed yekteb his own user and password
-        #'PASSWORD':'BatSwagYall',
+        'NAME': 'BlogProject',
+        'USER':'root',   # kol wa7ed yekteb his own user and password
+        'PASSWORD':'brody',
         'HOST':'localhost',#default host
         'PORT':'3306'#default port
     }
