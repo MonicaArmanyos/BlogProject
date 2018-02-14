@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+{% extends "homepage/base.html" %}
+{% block main_block %}
+    {% load static %}
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+
+                <h3>Categories</h3>
+
+                {% for Category in allCategories %}
+
+                    <ul class="list-styled components">
+                        <li class="active"><a href="#"> {{Category.category_name}} </a></li>
+                        {%if user.is_authenticated %}
+                        <button class="btn btn-danger Subcribe">Subcribe</button>
+                        {%endif%}
+                    </ul>
+                {%  endfor  %}
+
+
+            </div>
+
+
+
+            <div class="body col-6">
+                <h3 class="text-center">Top Posts</h3>
+
+                {% for Post in allPosts %}
+
+                    <h5 href="#">{{Post.title}}</h5>
+
+                    <div><img src="{{post.picture.url}}"></div>
+                    <div>
+                        <p> {{Post.content}} </p>
+                    </div>
+
+
+
+                {%  endfor  %}
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+</body>
+</html>

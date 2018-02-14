@@ -1,0 +1,21 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<table border="2">
+		<th>Tag</th>		
+		<th>Actions</th>
+		{%  for tag in allTags  %}
+		<tr>
+			<td>{{tag.tag_name}}</td>
+			<td><a href = "/admin/editTag/{{tag.id}}">Edit </a></td>
+			<td><a href = "/admin/deleteTag/{{tag.id}}">Delete </a></td>
+		</tr>
+		{%  endfor  %}
+	</table>
+	<a href = "/admin/addTag">Add Tag</a>
+</body>
+</html>

@@ -1,18 +1,6 @@
 from datetime import datetime
 from django.db import models
-
-
-class Users(models.Model):
-	user_name = models.CharField(max_length = 50)
-	email=models.EmailField(max_length = 60)
-	password=models.CharField(max_length = 10)
-	created_at=models.DateField(default=datetime.now, blank=True)
-	is_admin=models.BooleanField()
-	is_blocked=models.BooleanField()
-	def __str__(self):
-		return self.user_name
-
-
+from django.contrib.auth.models import User
 
 
 
@@ -22,13 +10,19 @@ class Categories(models.Model):
 	def __str__(self):
 		return self.category_name
 
+class Tags(models.Model):
+	tag_name=models.CharField(max_length = 15)
+	def __str__(self):
+		return self.tag_name
+
 class Posts(models.Model):
 	title=models.CharField(max_length = 50)
 	created_at = models.DateField(default=datetime.now, blank=True)
-	picture=models.ImageField()
+	picture=models.ImageField(upload_to='media',blank=True)
 	content=models.CharField(max_length = 200)
-	user = models.ForeignKey(Users)
 	category=models.ForeignKey(Categories)
+	tag = models.ManyToManyField(Tags)
+	user = models.ForeignKey(User,related_name='author')
 	def __str__(self):
 		return self.title
 
@@ -50,17 +44,11 @@ class Replies(models.Model):
 
 
 class Likes(models.Model):
-	type=models.IntegerField()
+	state=models.IntegerField()
+	user = models.ForeignKey(User)
 	post = models.ForeignKey(Posts)
 	def __str__(self):
-		return self.type
-
-
-class Tags(models.Model):
-	tag_name=models.CharField(max_length = 15)
-	post = models.ForeignKey(Posts)
-	def __str__(self):
-		return self.tag_name
+		return self.state
 
 
 class ForbiddenWords(models.Model):

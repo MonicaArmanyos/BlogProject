@@ -1,0 +1,84 @@
+.search{
+
+    width: 20px;
+    margin-left: 400px;
+    margin-top: 20px;
+    margin-top: 20px;
+}
+.navbar-default{
+    background-color: #eedbdf;
+}
+
+.Subcribe{
+    width: auto;
+    height: auto
+}
+.body{
+    margin-left: 20px;
+}
+body{
+    background-color: #eedbdf;
+}
+.navbar-default .navbar-brand {
+    color: 	#d2adad;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+    border-color:	#b88995;
+
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #5e5e5e;
+    background-color: transparent;
+}
+.navbar-default .navbar-text {
+    color: 	#b88995;
+}
+.navbar-default .navbar-nav > li > a {
+    color: 	#b88995;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #333;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: 	#b88995;
+    background-color: #e7e7e7;
+}
+.navbar-default .navbar-nav > .disabled > a,
+.navbar-default .navbar-nav > .disabled > a:hover,
+.navbar-default .navbar-nav > .disabled > a:focus {
+    color: #ccc;
+    background-color: transparent;
+}
+.navbar-default .navbar-toggle {
+    border-color: #ddd;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #ddd;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color:	#b88995;
+}
+
+
+
+
+ul {
+    background: #A57676;
+    padding: 10px;
+    width: 200px;
+    height: 100px;
+}
+
+
+
+ul li {
+    background:#f2e4e7;
+    margin: 5px;
+}
