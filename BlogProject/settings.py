@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'admin',
     'blog',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BlogProject',#database name
-        #'USER':'phpmyadmin',   # kol wa7ed yekteb his own user and password
-        #'PASSWORD':'BatSwagYall',
+        'USER':'phpmyadmin',   # kol wa7ed yekteb his own user and password
+        'PASSWORD':'BatSwagYall',
         'HOST':'localhost',#default host
         'PORT':'3306'#default port
     }
@@ -105,3 +105,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -10,13 +10,19 @@ class Categories(models.Model):
 	def __str__(self):
 		return self.category_name
 
+class Tags(models.Model):
+	tag_name=models.CharField(max_length = 15)
+	def __str__(self):
+		return self.tag_name
+
 class Posts(models.Model):
 	title=models.CharField(max_length = 50)
 	created_at = models.DateField(default=datetime.now, blank=True)
-	picture=models.ImageField()
+	picture=models.ImageField(upload_to='media',blank=True)
 	content=models.CharField(max_length = 200)
 	user = models.ForeignKey(User)
 	category=models.ForeignKey(Categories)
+	tag = models.ManyToManyField(Tags)
 	def __str__(self):
 		return self.title
 
@@ -42,13 +48,6 @@ class Likes(models.Model):
 	post = models.ForeignKey(Posts)
 	def __str__(self):
 		return self.type
-
-
-class Tags(models.Model):
-	tag_name=models.CharField(max_length = 15)
-	post = models.ManyToManyField(Posts)
-	def __str__(self):
-		return self.tag_name
 
 
 class ForbiddenWords(models.Model):

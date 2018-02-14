@@ -1,0 +1,31 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<table border="2">
+		<th>Title</th>
+		<th>Content</th>
+		<th>Picture</th>
+		<th>Category</th>
+		<th>Created_at</th>
+		<th>Author</th>
+		<th>Actions</th>
+		{%  for post in allPosts  %}
+		<tr>
+			<td>{{post.title}}</td>
+			<td>{{post.content}}</td>
+                        <td><img src="{{post.picture.url}}"></td>
+                        <td>{{post.category}}</td>
+                        <td>{{post.created_at}}</td>
+                        <td>{{post.user}}</td>
+			<td><a href = "/admin/editPost/{{post.id}}">Edit </a></td>
+			<td><a href = "/admin/deletePost/{{post.id}}">Delete </a></td>
+		</tr>
+		{%  endfor  %}
+	</table>
+	<a href = "/admin/addPost">Add Post</a>
+</body>
+</html>
