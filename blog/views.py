@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Categories, Posts
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
@@ -6,6 +7,9 @@ from django.contrib.auth import authenticate , login , logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
 
+def homepage(request):
+    context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()}
+    return render(request, 'homepage/homepage.html', context)
 
 
 def index(request):
@@ -40,10 +44,7 @@ def register(request):
 
     else:
         user_form = UserForm()
-        return render(request,"registeration.html",{"user_form":user_form , "registered":registered})
-
-
-
+        return render(request, "login&&register/registeration.html", {"user_form":user_form , "registered":registered})
 
 
 
@@ -58,15 +59,11 @@ def user_login(request):
                 login(request,user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-                return render(request, 'login.html', {'info': 0}) #user Not Active
+                return render(request, 'login&&register/login.html', {'info': 0}) #user Not Active
         else:
-            return render(request, 'login.html', {'info':1}) #error in username or password
+            return render(request, 'login&&register/login.html', {'info':1}) #error in username or password
 
     else:
-        return render(request,'login.html',{})
-
-
-
-
+        return render(request, 'login&&register/login.html', {})
 
 

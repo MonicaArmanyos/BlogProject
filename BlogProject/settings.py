@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -102,9 +103,9 @@ WSGI_APPLICATION = 'BlogProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'BlogProject',
+        'NAME': 'BlogProject',#database name
         'USER':'root',   # kol wa7ed yekteb his own user and password
-        'PASSWORD':'brody',
+        'PASSWORD':'01200882344na',
         'HOST':'localhost',#default host
         'PORT':'3306'#default port
     }

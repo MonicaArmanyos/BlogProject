@@ -55,4 +55,3 @@ class ForbiddenWords(models.Model):
 	word=models.CharField(max_length = 15)
 	def __str__(self):
 		return self.word
-
