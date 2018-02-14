@@ -132,3 +132,25 @@ def deleteTag(request,tag_id):
     tag=Tags.objects.get(id=tag_id)
     tag.delete()
     return HttpResponseRedirect('/admin/allTags')
+    
+def allUsers(request):
+	context={"allUsers":User.objects.all()}
+	return render(request,"users.html",context)
+	
+def blockUser(request,user_id):
+    user=User.objects.get(id=user_id)
+    user.is_active=0
+    user.save()
+    return HttpResponseRedirect('/admin/allUsers')
+    
+def unblockUser(request,user_id):
+    user=User.objects.get(id=user_id)
+    user.is_active=1
+    user.save()
+    return HttpResponseRedirect('/admin/allUsers')
+    
+def promoteUser(request,user_id):
+    user=User.objects.get(id=user_id)
+    user.is_superuser=1
+    user.save()
+    return HttpResponseRedirect('/admin/allUsers')

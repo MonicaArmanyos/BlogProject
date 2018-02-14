@@ -1,0 +1,32 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<table border="2">
+		<th>Username</th>
+		<th>Email</th>		
+		<th>Actions</th>
+		{%  for user in allUsers  %}
+		<tr>
+			{% if user.is_superuser == 1 %}
+				<td><font color="red">{{user.username}}</font></td>
+				<td><font color="red">{{user.email}}</font></td>
+			{% elif user.is_superuser == 0 %}
+				<td>{{user.username}}</td>
+				<td>{{user.email}}</td>
+				{% if user.is_active == 1 %}
+                                	<td><a href = "/admin/blockUser/{{user.id}}">Block </a></td>
+					<td><a href = "/admin/promoteUser/{{user.id}}">Promote User </a></td>
+				{% else %}
+					<td><a href = "/admin/unblockUser/{{user.id}}">Unblock </a></td>
+				{% endif %}
+			{% endif %}
+		</tr>
+		{%  endfor  %}
+	</table>
+
+</body>
+</html>
