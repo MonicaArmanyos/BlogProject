@@ -23,7 +23,6 @@ class Posts(models.Model):
 	category=models.ForeignKey(Categories)
 	tag = models.ManyToManyField(Tags)
 	user = models.ForeignKey(User,related_name='author')
-
 	def __str__(self):
 		return self.title
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Categories, Posts
+from .models import Categories, Posts ,Tags
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
@@ -8,12 +8,21 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
 
 def homepage(request):
-    context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()}
+    context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()[:5]}
     return render(request, 'homepage/homepage.html', context)
+
+def search(request):
+    tag=Tags.objects.get(tag_name__contains=request.POST['term'])
+    found_postt=Posts.objects.filter(tag=tag.id)
+    found_posts = Posts.objects.filter(title__icontains=request.POST['term']).order_by('created_at')
+    context = {"found": found_posts,"foundd":found_postt}
+    return render(request, "search.html", context)
+
 
 
 def index(request):
     return  render(request,"homepage.html")
+
 
 @login_required
 def user_logout(request):
