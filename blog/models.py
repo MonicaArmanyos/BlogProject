@@ -17,7 +17,7 @@ class Tags(models.Model):
 
 class Posts(models.Model):
 	title=models.CharField(max_length = 50)
-	created_at = models.DateField(default=datetime.now, blank=True)
+	created_at = models.DateTimeField(default=datetime.now, blank=True)
 	picture=models.ImageField(upload_to='media',blank=True)
 	content=models.CharField(max_length = 200)
 	category=models.ForeignKey(Categories)

@@ -6,10 +6,29 @@ from .forms import UserForm
 from django.contrib.auth import authenticate , login , logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def homepage(request):
-    context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()[:5]}
+
+    allPosts = Posts.objects.all().order_by("-created_at")
+    paginator = Paginator(allPosts, 5)
+    page = request.GET.get('page')
+    try:
+    	posts= paginator.page(page)
+    except PageNotAnInteger:
+    	posts= paginator.page(1)
+    except EmptyPage:
+    	posts= paginator.page(paginator.num_pages)
+    	
+    	
+    context = {'allCategories':Categories.objects.all(), 'allPosts':posts}
     return render(request, 'homepage/homepage.html', context)
+    
+
+
+
+ 
+
 
 def search(request):
     tag=Tags.objects.get(tag_name__contains=request.POST['term'])
