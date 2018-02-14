@@ -58,9 +58,9 @@ def user_login(request):
                 login(request,user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-                return HttpResponse("Acount Not Active Please Contact With Admin")
+                return render(request, 'login.html', {'info': 0}) #user Not Active
         else:
-            return HttpResponse("invalid user name and password")
+            return render(request, 'login.html', {'info':1}) #error in username or password
 
     else:
         return render(request,'login.html',{})
