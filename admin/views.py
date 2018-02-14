@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from blog.models import Categories,Posts,ForbiddenWords
+from blog.models import Categories,Posts,ForbiddenWords,Tags
 from django.contrib.auth.models import User
-from .forms import PostForm,CategoryForm,WordForm
+from .forms import PostForm,CategoryForm,WordForm,TagForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -100,3 +100,35 @@ def deleteWord(request,word_id):
     word=Words.objects.get(id=word_id)
     word.delete()
     return HttpResponseRedirect('/admin/allWords')
+ 
+def allTags(request):
+	context={"allTags":Tags.objects.all()}
+	return render(request,"tags.html",context)
+def addTag(request):
+	form=TagForm()
+	if request.method=="POST":
+		form=TagForm(request.POST)
+		if form.is_valid():
+			form.save()
+	                return HttpResponseRedirect('/admin/allTags')
+	return render(request,"newTag.html",{'form':form})
+	
+
+
+def editTag(request,tag_id):
+	form=TagForm()
+	tag=Tags.objects.get(id=tag_id)
+	if request.method=="POST":
+		form=TagForm(request.POST,instance=tag)
+		if form.is_valid():
+			form.save()
+	        return HttpResponseRedirect('/admin/allTags')
+	else:
+		form=TagForm(instance=tag)
+	return render(request,"editTag.html",{'form':form})	
+	
+
+def deleteTag(request,tag_id):
+    tag=Tags.objects.get(id=tag_id)
+    tag.delete()
+    return HttpResponseRedirect('/admin/allTags')

@@ -12,6 +12,7 @@
 		<th>Category</th>
 		<th>Created_at</th>
 		<th>Author</th>
+		<th>Tags</th>
 		<th>Actions</th>
 		{%  for post in allPosts  %}
 		<tr>
@@ -21,8 +22,11 @@
                         <td>{{post.category}}</td>
                         <td>{{post.created_at}}</td>
                         <td>{{post.user}}</td>
+                        <td>{% for i in post.tag.all %}{{i.tag_name}}{% endfor %}</td>
 			<td><a href = "/admin/editPost/{{post.id}}">Edit </a></td>
 			<td><a href = "/admin/deletePost/{{post.id}}">Delete </a></td>
+			
+			
 		</tr>
 		{%  endfor  %}
 	</table>

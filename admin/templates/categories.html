@@ -7,12 +7,12 @@
 <body>
 	<table border="2">
 		<th>Category</th>
-		<th>Users</th>		
+		<th>Subscribers</th>		
 		<th>Actions</th>
 		{%  for category in allCategories  %}
 		<tr>
 			<td>{{category.category_name}}</td>
-                        <td>{{category.user}}</td>
+                        <td>{% for i in category.user.all %}{{i.username}}{% endfor %}</td>
 			<td><a href = "/admin/editCategory/{{category.id}}">Edit </a></td>
 			<td><a href = "/admin/deleteCategory/{{category.id}}">Delete </a></td>
 		</tr>
