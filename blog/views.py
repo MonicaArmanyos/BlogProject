@@ -13,7 +13,7 @@ def homepage(request):
 
 
 def index(request):
-    return  render(request,"index.html")
+    return  render(request,"homepage.html")
 
 @login_required
 def user_logout(request):
@@ -36,7 +36,7 @@ def register(request):
             user.set_password(user.password)
             user.save()
             registered=True
-            return HttpResponseRedirect('/blog/home')
+            return HttpResponseRedirect('/blog/homepage')
 
         else:
             #print(user_form.errors)
