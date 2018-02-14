@@ -5,11 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-<script src="layout/js/jquery-1.12.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="layout/js/jquery-ui.min.js"></script>
-<script src="layout/js/bootstrap.min.js"></script>
-<script src="layout/js/jquery.selectBoxIt.min.js"></script>
-<script src="layout/js/front.js"></script>
+{% load static %}
+<script src="{% static 'jquery-1.12.1.min.js' %}"></script>
+<script src="{% static 'https://code.jquery.com/ui/1.12.1/jquery-ui.js' %}"></script>
+<script src="{% static 'jquery-ui.min.js' %}"></script>
+<script src="{% static 'bootstrap.min.js' %}"></script>
+<script src="{% static 'jquery.selectBoxIt.min.js' %}"></script>
+<script src="{% static 'front.js' %}"></script>
 </body>
 </html>
+
+
+
+

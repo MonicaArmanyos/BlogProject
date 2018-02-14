@@ -2,13 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
 </head>
 <body>
 {% extends "homepage/base.html" %}
 {% block main_block %}
 {% load static %}
-    <h1>helllllllllllllllo</h1>
+    <div class="wrapper">
+
+        <nav id="sidebar">
+
+            <div class="sidebar-header">
+                <h3>Categories</div>
+    </div>
+    {%  for Category in allCategories  %}
+    <!-- Sidebar Links -->
+    <ul class="list-unstyled components">
+        <li class="active"><a href="#">{{Categories.category_name}}</a></li>
+
+    </ul>
+    {%  endfor  %}
+    </nav>
+
+    </div>
+
 {% endblock %}
 </body>
 </html>
