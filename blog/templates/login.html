@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
-</html>
+
+<!DOCTYPE html>
+{%extends "base.html"%}
+{%block body_block%}
+{% load staticfiles%}
+<div class="loginc">
+
+
+
+    <h1>login here</h1>
+    <form method="post" > {% csrf_token %}
+
+
+<label for="username"></label>
+ <input type="text" name="username" placeholder="Enter user name">
+        <label for="password"></label>
+ <input type="text" name="password">
+<input type="submit"  value="login">
+    </form>
+
+
+</div>
+
+
+
+{% endblock%}
+
+
