@@ -23,7 +23,6 @@ class Posts(models.Model):
 	category=models.ForeignKey(Categories)
 	tag = models.ManyToManyField(Tags)
 	user = models.ForeignKey(User,related_name='author')
-	userLikes = models.ManyToManyField(User,related_name='userLikes')
 	def __str__(self):
 		return self.title
 
@@ -45,10 +44,11 @@ class Replies(models.Model):
 
 
 class Likes(models.Model):
-	type=models.IntegerField()
+	state=models.IntegerField()
+	user = models.ForeignKey(User)
 	post = models.ForeignKey(Posts)
 	def __str__(self):
-		return self.type
+		return self.state
 
 
 class ForbiddenWords(models.Model):
