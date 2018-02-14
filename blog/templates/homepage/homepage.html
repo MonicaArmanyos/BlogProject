@@ -12,19 +12,40 @@
 
         <nav id="sidebar">
 
-            <div class="sidebar-header">
-                <h3>Categories</div>
-    </div>
-    {%  for Category in allCategories  %}
-    <!-- Sidebar Links -->
-    <ul class="list-unstyled components">
-        <li class="active"><a href="#">{{Categories.category_name}}</a></li>
+            <div class="sidebar-header text-dark">
+                <h3>Categories</h3>
 
-    </ul>
-    {%  endfor  %}
+                             {% for Category in allCategories %}
+
+                                 <ul class="list-unstyled components">
+                                     <li class="active"><a href="#"> {{Category.category_name}} </a><button class="btn btn-danger Subcribe">Subcribe</button></li>
+                                 </ul>
+                             {%  endfor  %}
+    </div>
+
+
+
     </nav>
 
     </div>
+<div class="body ">
+    <h3 class="text-center">Top Posts</h3>
+
+    {% for Post in allPosts %}
+
+        <div class="container" >
+        <div class="row">
+        <h5 href="#">{{Post.title}}</h5>
+            </div>
+            <div><img src="#"></div>
+            <div>
+        <p> {{Post.content}} </p>
+            </div>
+
+        </div>
+
+    {%  endfor  %}
+</div>
 
 {% endblock %}
 </body>

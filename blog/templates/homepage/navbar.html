@@ -14,15 +14,32 @@
         <div class="collapse navbar-collapse navbar-right ml-auto" id="app-nav">
             <ul class="nav navbar-nav">
                 <li><a href="#">Admin</a></li>
-                <li><a href="#">Home</a></li>
-                <li><a href="#"></a></li>
-                <li><a href="#"></a></li>
-                <li><a href="#"></a></li>
+                <li><a href="/blog/homepage/">Home</a></li>
+                <li><form method="GET"><input id="searchitem"  class="form-control mr-sm-2 searchform" type="text" name="search" placeholder="Search"/></form>  </li>
+                {%if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link"  href="/blog/logout">logout</a>
+                    </li>
+                {%else%}
+                    <li class="nav-item">
+                        <a class="nav-link"  href="/blog/user_login">login</a>
+                    </li>
+                {%endif%}
+
+                {%if user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link"  href="#">Manage website</a>
+                    </li>
+
+                {%endif%}
             </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Login/Signup</a></li>
-            </ul>
+
+
+
+
+</div>
+
         </div>
     </div>
 </nav>
