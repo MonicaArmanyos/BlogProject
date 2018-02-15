@@ -7,45 +7,49 @@
 <body>
 {% extends "homepage/base.html" %}
 {% block main_block %}
-{% load static %}
-    <div class="wrapper">
+    {% load static %}
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
 
-        <nav id="sidebar">
-
-            <div class="sidebar-header text-dark">
                 <h3>Categories</h3>
 
-                             {% for Category in allCategories %}
+                {% for Category in allCategories %}
 
-                                 <ul class="list-unstyled components">
-                                     <li class="active"><a href="#"> {{Category.category_name}} </a><button class="btn btn-danger Subcribe">Subcribe</button></li>
-                                 </ul>
-                             {%  endfor  %}
-    </div>
+                    <ul class="list-styled components">
+                        <li class="active"><a href="#"> {{Category.category_name}} </a></li>
+                        {%if user.is_authenticated %}
+                        <button class="btn btn-danger Subcribe">Subcribe</button>
+                        {%endif%}
+                    </ul>
+                {%  endfor  %}
 
 
-
-    </nav>
-
-    </div>
-<div class="body ">
-    <h3 class="text-center">Top Posts</h3>
-
-    {% for Post in allPosts %}
-
-        <div class="container" >
-        <div class="row">
-        <h5 href="#">{{Post.title}}</h5>
-            </div>
-            <div><img src="#"></div>
-            <div>
-        <p> {{Post.content}} </p>
             </div>
 
+
+
+            <div class="body col-6">
+                <h3 class="text-center">Top Posts</h3>
+
+                {% for Post in allPosts %}
+
+                    <h5 href="#">{{Post.title}}</h5>
+
+                    <div><img src="#"></div>
+                    <div>
+                        <p> {{Post.content}} </p>
+                    </div>
+
+
+
+                {%  endfor  %}
+            </div>
         </div>
 
-    {%  endfor  %}
-</div>
+
+    </div>
 
 {% endblock %}
 </body>

@@ -8,12 +8,16 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
 
 def homepage(request):
-    context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()}
+    context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()[:5]}
     return render(request, 'homepage/homepage.html', context)
 
+def search(request):
 
-def index(request):
-    return  render(request,"index.html")
+    found_entries = Posts.objects.filter(title__icontains=request.POST['term']).order_by('created_at')
+    context = {"found": found_entries}
+    return render(request, "search.html", context)
+
+
 
 @login_required
 def user_logout(request):
