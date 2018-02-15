@@ -2,10 +2,12 @@ from django.shortcuts import render
 from .models import Categories, Posts
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import UserForm
+from .forms import RegUserForm
 from django.contrib.auth import authenticate , login , logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
+from django.contrib.auth.models import User
+
 
 def homepage(request):
     context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()}
@@ -26,27 +28,18 @@ def special(request):
     return HttpResponse("you are loggin")
 
 
-
 def register(request):
-    registered=False
+    usr_form=RegUserForm()
+
     if request.method=="POST":
-        user_form=UserForm(request.POST)
-        if user_form.is_valid():
-            user=user_form.save()
-            user.set_password(user.password)
-            user.save()
-            registered=True
-            return HttpResponseRedirect('/blog/homepage')
-
-        else:
-            #print(user_form.errors)
-            pass
-
-    else:
-        user_form = UserForm()
-        return render(request, "login&&register/registeration.html", {"user_form":user_form , "registered":registered})
-
-
+        users = User.objects.all().filter(email=request.POST['email'])
+        if users.exists():
+            return render(request, "login&&register/registeration.html", {"form": usr_form, "dublemail": 1})
+        usr_form = RegUserForm(request.POST)
+        if usr_form.is_valid():
+            usr_form.save()
+            return HttpResponseRedirect("/blog/homepage")
+    return render(request, "login&&register/registeration.html",{"form":usr_form})
 
 
 def user_login(request):
