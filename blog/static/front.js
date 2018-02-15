@@ -6,11 +6,40 @@
     }
 });
 */
-$(".Subcribe").on('click',function() {
-    $(this).toggleClass('Subcribe');
-    if($(this).hasClass('Subcribe')){
-        $(this).text('UnSubcribe');
-    } else {
-        $(this).text('Subcribe');
-    }
+$(".Subscribe").on('click',function() {
+    cat_id = $(this).val();
+    btn=this;
+
+        $.ajax({
+
+            url: '/blog/sub',
+            data : {
+                'catid':cat_id,
+            },
+            dataType:'json',
+            success: function() {
+                $(btn).text('Unsubscribe');
+                console.log("ana subs")
+                }
+            })
+
+   
+      /*
+    
+        $.ajax({
+
+            url: '/blog/unsub',
+            data : {
+                'catid':cat_id,
+            },
+            dataType:'json',
+            success: function() {
+            $(btn).text('Subscribe');
+                console.log("ana msh subs")
+                }
+            })
+
+   }   */  
+     
 });
+

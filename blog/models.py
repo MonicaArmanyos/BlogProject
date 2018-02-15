@@ -2,13 +2,15 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
-
-
 class Categories(models.Model):
 	category_name=models.CharField(max_length = 50)
-	user = models.ManyToManyField(User)
+	user = models.ManyToManyField(User, through="CategoryUser")
 	def __str__(self):
 		return self.category_name
+
+class CategoryUser(models.Model):
+	category= models.ForeignKey(Categories)
+	user= models.ForeignKey(User)
 
 class Tags(models.Model):
 	tag_name=models.CharField(max_length = 15)
@@ -55,4 +57,3 @@ class ForbiddenWords(models.Model):
 	word=models.CharField(max_length = 15)
 	def __str__(self):
 		return self.word
-

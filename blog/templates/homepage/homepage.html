@@ -18,9 +18,12 @@
                 {% for Category in allCategories %}
 
                     <ul class="list-styled components">
-                        <li class="active"><a href="#"> {{Category.category_name}} </a></li>
+                        <li class="active"><a href="/blog/homepage/{{Category.id}}">{{Category.category_name}}</a></li>
+
                         {%if user.is_authenticated %}
-                        <button class="btn btn-danger Subcribe">Subcribe</button>
+                        <button class="btn btn-danger Subscribe " value="{{Category.id}}" >Subscribe
+                        </button>
+
                         {%endif%}
                     </ul>
                 {%  endfor  %}
@@ -52,8 +55,7 @@
     <span class="step-links">
         {% if allPosts.has_previous %}
             <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ 
-            allPosts.previous_page_number }}">previous</a>
+            <a href="?page={{ allPosts.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
