@@ -7,7 +7,8 @@ from django.contrib.auth import authenticate , login , logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
 from django.contrib.auth.models import User
-from django.views.generic import RedirectView
+from .models import Likes
+from django.http import JsonResponse
 
 
 
@@ -63,10 +64,24 @@ def user_login(request):
 
 
 def getProduct(request,post_id):
-    pst=Posts.objects.get(id=post_id)
-    context={"post":pst}
+    pst=Posts.objects.filter(id=post_id)
+    context={"post":pst[0]}
     return render(request,"postdetails/get_post.html",context);
 
 
 def makelike(request,post_id):
-    return HttpResponse("any")
+    if request.user.is_authenticated():
+            post = Posts.objects.filter(id=post_id)
+            record=Likes.objects.all().filter(state=1, user=request.user, post=post[0])
+            if record.exists():
+                pass
+            else:
+                Likes.objects.create(state=1, user=request.user, post=post[0])
+
+
+
+    return HttpResponse("data")
+
+
+
+
