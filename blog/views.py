@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate , login , logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
 from django.contrib.auth.models import User
+from django.views.generic import RedirectView
+
 
 
 def homepage(request):
@@ -60,3 +62,11 @@ def user_login(request):
         return render(request, 'login&&register/login.html', {})
 
 
+def getProduct(request,post_id):
+    pst=Posts.objects.get(id=post_id)
+    context={"post":pst}
+    return render(request,"postdetails/get_post.html",context);
+
+
+def makelike(request,post_id):
+    return HttpResponse("any")
