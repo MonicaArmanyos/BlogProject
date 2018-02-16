@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Post</title>
 </head>
 <body>
-
+{% extends "homepage/base.html" %}
+{% block main_block %}
+    {% load static %}
 <h1>{{post.title}}</h1>
+
+{% endblock %}
 </body>
 </html>
