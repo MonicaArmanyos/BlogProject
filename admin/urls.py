@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.dashBoard),
+    url(r'^admin$', views.dashBoard),
     url(r'^allPosts/$', views.allPosts),
     url(r'^addPost/$', views.addPost),
     url(r'^editPost/(?P<post_id>[0-9]+)/$', views.editPost),

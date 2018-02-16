@@ -1,0 +1,50 @@
+
+
+#tablel{
+
+     width:80%;
+	 height:auto;
+	 position:relative;
+	 padding-left:10%;
+}
+
+
+div.form input{
+    width: 40%;
+	border-radius: 50px;
+
+}
+.container.text-center h1{
+	color:#17a2b8;
+}
+div.form label{
+  color:#d88715;
+	display:auto;
+
+}
+
+
+div.form select{
+
+	width: 200px;
+}
+
+.container.text-center form{
+width: 50%;
+background-color:rgba(0,0,0,0.2);
+	position: relative;
+border-radius:40px;
+padding:50px;
+	margin-left: 275px;
+}
+
+
+
+a:link{
+	text-decoration: none;
+}
+
+th{
+	background-color:#b8daff;
+	color: #d88715;
+}

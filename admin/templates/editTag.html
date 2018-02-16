@@ -1,5 +1,84 @@
-<h1>Edit Tag</h1>
-<form method="POST">{% csrf_token %}
-{{ form.as_p}}
-<button type="submit">Save</button>
-</form>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+</head>
+<body >
+{% extends "base.html" %}
+{% block main_block %}
+    {% load static %}
+    <div class="wrapper">
+        <div class="sidebar" data-background-color="white" data-active-color="danger">
+
+
+
+
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="#" class="simple-text">
+                        Dashboard
+                    </a>
+                </div>
+
+                <ul class="nav">
+                    <li >
+                        <a href="/admin/admin">
+                            <i></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allUsers">
+                            <i class="ti-user"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="/admin/allCategories">
+                            <i class="ti-panel"></i>
+                            <p>Categories </p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/allPosts">
+                            <i class="ti-view-list-alt"></i>
+                            <p> Posts</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allWords">
+                            <i class="ti-text"></i>
+                            <p>Forbidden Words</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allTags">
+                            <i class="ti-pencil-alt2"></i>
+                            <p>Tags</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+    <div class="container text-center">
+        <h1>Edit Tag</h1>
+
+        <form method="POST" class="view-form">{% csrf_token %}
+            <div class="form">
+                {{ form.as_p}}
+                <button class="btn btn-info" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+</body>
+</html>
+
