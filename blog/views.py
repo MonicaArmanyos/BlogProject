@@ -67,5 +67,6 @@ def user_login(request):
         return render(request, 'login&&register/login.html', {})
 
 
-def post(request):
-    return render(request, 'post.html')
+def post(request,post_id):
+    context={'post':Posts.objects.get(id=post_id)}
+    return render(request, 'post.html',context)
