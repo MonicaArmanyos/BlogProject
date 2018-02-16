@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'admin',
     'blog',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -104,8 +104,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BlogProject',#database name
-        'USER':'root',   # kol wa7ed yekteb his own user and password
-        'PASSWORD':'01200882344na',
+        #'USER':'root',   # kol wa7ed yekteb his own user and password
+        #'PASSWORD':'01200882344na',
         'HOST':'localhost',#default host
         'PORT':'3306'#default port
     }
@@ -131,3 +131,6 @@ USE_TZ = True
 
 STATIC_URL = os.path.join(BASE_DIR, 'blog/static/')
 LOGIN_URL = '/user_login'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

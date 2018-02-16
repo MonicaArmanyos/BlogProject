@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Categories, Posts
+from .models import Categories, Posts ,Tags
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
@@ -12,11 +12,16 @@ def homepage(request):
     return render(request, 'homepage/homepage.html', context)
 
 def search(request):
-
-    found_entries = Posts.objects.filter(title__icontains=request.POST['term']).order_by('created_at')
-    context = {"found": found_entries}
+    tag=Tags.objects.get(tag_name__contains=request.POST['term'])
+    found_postt=Posts.objects.filter(tag=tag.id)
+    found_posts = Posts.objects.filter(title__icontains=request.POST['term']).order_by('created_at')
+    context = {"found": found_posts,"foundd":found_postt}
     return render(request, "search.html", context)
 
+
+
+def index(request):
+    return  render(request,"homepage.html")
 
 
 @login_required
@@ -40,7 +45,7 @@ def register(request):
             user.set_password(user.password)
             user.save()
             registered=True
-            return HttpResponseRedirect('/blog/home')
+            return HttpResponseRedirect('/blog/homepage')
 
         else:
             #print(user_form.errors)
@@ -48,7 +53,7 @@ def register(request):
 
     else:
         user_form = UserForm()
-        return render(request,"registeration.html",{"user_form":user_form , "registered":registered})
+        return render(request, "login&&register/registeration.html", {"user_form":user_form , "registered":registered})
 
 
 
@@ -63,11 +68,11 @@ def user_login(request):
                 login(request,user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-                return HttpResponse("Acount Not Active Please Contact With Admin")
+                return render(request, 'login&&register/login.html', {'info': 0}) #user Not Active
         else:
-            return HttpResponse("invalid user name and password")
+            return render(request, 'login&&register/login.html', {'info':1}) #error in username or password
 
     else:
-        return render(request,'login.html',{})
+        return render(request, 'login&&register/login.html', {})
 
 
