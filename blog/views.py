@@ -67,3 +67,5 @@ def user_login(request):
         return render(request, 'login&&register/login.html', {})
 
 
+def post(request):
+    return render(request, 'post.html')
