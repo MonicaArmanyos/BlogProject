@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from .models import Categories, Posts ,Tags
+from .models import Categories, Posts ,Tags ,CategoryUser
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
 from django.contrib.auth import authenticate , login , logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 def homepage(request):
     context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()[:5]}
@@ -22,6 +24,19 @@ def getCategoryPosts(request, cat_id):
     get_category = Categories.objects.get(id=cat_id)
     context = {'allPosts':Posts.objects.filter(category_id=get_category.id).order_by('-created_at')}
     return render(request, "homepage/homepage.html", context)
+
+def subscribe (request ,cat_id ,user_id):
+    sub=CategoryUser.objects.create(category_id=cat_id ,user_id=user_id)
+    sub.save()
+    #return HttpResponse()
+    return JsonResponse({"ana aho",True},safe=False)
+
+def unsubscribe (request ,cat_id ,user_id):
+    unsub=CategoryUser.objects.get(category_id=cat_id ,user_id=user_id)
+    unsub.delete()
+    #return HttpResponse()
+    return JsonResponse({"ana mesh aho",True},safe=False)
+
 
 @login_required
 def user_logout(request):
