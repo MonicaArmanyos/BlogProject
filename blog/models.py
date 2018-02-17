@@ -25,34 +25,3 @@ class Posts(models.Model):
 	user = models.ForeignKey(User,related_name='author')
 	def __str__(self):
 		return self.title
-
-
-class Comments(models.Model):
-	text=models.CharField(max_length = 200)
-	user = models.ForeignKey(Users)
-	post=models.ForeignKey(Posts)
-	def __str__(self):
-		return self.content
-
-
-class Replies(models.Model):
-	text = models.CharField(max_length=200)
-	user = models.ForeignKey(Users)
-	comment=models.ForeignKey(Comments)
-	def __str__(self):
-		return self.text
-
-
-class Likes(models.Model):
-	state=models.IntegerField()
-	user = models.ForeignKey(User)
-	post = models.ForeignKey(Posts)
-	def __str__(self):
-		return self.state
-
-
-class ForbiddenWords(models.Model):
-	word=models.CharField(max_length = 15)
-	def __str__(self):
-		return self.word
-
