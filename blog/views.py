@@ -64,10 +64,19 @@ def user_login(request):
 
 
 def getProduct(request,post_id):
+    isliked=0
+    isdisliked=0
     pst=Posts.objects.filter(id=post_id)
+    if request.user.is_authenticated():
+        record = Likes.objects.all().filter(state=1, user=request.user, post=pst[0])
+        record1 = Likes.objects.all().filter(state=0, user=request.user, post=pst[0])
+        if record.exists():
+            isliked=1
+        if record1.exists():
+            isdisliked=1
     countlikes = Likes.objects.all().filter(state=1, post=pst).count()
     countdislike = Likes.objects.all().filter(state=0, post=pst).count()
-    context={"post":pst[0] , "plikes":countlikes ,"pdislike":countdislike}
+    context={"post":pst[0] , "plikes":countlikes ,"pdislike":countdislike ,"userlike":isliked,"userdislike":isdisliked}
     return render(request,"postdetails/get_post.html",context)
 
 

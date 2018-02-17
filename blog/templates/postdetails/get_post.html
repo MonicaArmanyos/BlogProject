@@ -43,7 +43,24 @@
 
 
           <hr>
-         <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.user.id}}">like</a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.user.id}}">Dislike</a></p>
+         <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.user.id}}">
+
+             {% if userlike == 1 %}
+            <span class="marklike">liked<span>
+             {%else%}
+            <span class="marklike">like</span>
+             {%endif%}
+
+         </a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.user.id}}">
+
+             {% if userdislike == 1 %}
+             <span class="markdislike">disliked</span>
+             {%else%}
+            <span class="markdislike">dislike</span>
+             {%endif%}
+
+
+         </a></p>
 
 
 
