@@ -10,6 +10,7 @@
     <title>Title</title>
     <script src="{%static 'js/jquery.min.js' %}"></script>
     <script src="{%static 'jquery/ajax.js' %}"></script>
+    <script src="{%static 'jquery/ajax2.js' %}"></script>
 </head>
 <body>
 
@@ -42,7 +43,9 @@
 
 
           <hr>
-         <p><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.user.id}}">like</a><a id="dislike" style="cursor:pointer">Dislike</a></p>
+         <p><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.user.id}}">like</a><a id="dislikepo" style="cursor:pointer" data-post="{{post.user.id}}">Dislike</a></p>
+
+
 
           <!-- Comments Form -->
           <div class="card my-4">

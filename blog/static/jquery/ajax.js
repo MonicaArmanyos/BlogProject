@@ -6,8 +6,11 @@ var postid=$(this).attr("data-post")
 
   $.ajax({
        url:"http://127.0.0.1:8000/blog/like/"+postid,
-       success:function (data) {
+       success:function (response) {
     alert(postid)
+     response=JSON.parse(response)
+
+    console.log(response)
        }
 
 
@@ -16,11 +19,8 @@ var postid=$(this).attr("data-post")
 })
 
 
-
-
-
-
 })
+
 
 
 })
