@@ -24,6 +24,35 @@
 <div>{{post.content}}</div>
 <div id="comments">
     <h2>Comments:</h2>
+     {% for comment in comments %}
+   <div>
+       <div> {{comment.user}}</div>
+       <div> {{comment.created_at}}</div>
+       <div> {{comment.text}}</div>
+
+        {% for reply in replies %}
+            {% if reply.comment_id == comment.id %}
+
+               Reply from: <div> {{reply.user}}</div>
+                <div> {{reply.created_at}}</div>
+                <div> {{reply.text}}</div>
+
+            {% endif %}
+        {% endfor %}
+
+       <textarea cols="30" rows="3" placeholder="Reply"></textarea><button>post</button>
+   
+
+   </div>
+    <br/>
+    <hr/>
+    <br/>
+    {% endfor %}
+     {%if user.is_authenticated %}
+    <textarea cols="30" rows="3" placeholder="Add comment"/><button>post</button>
+    {% else %}
+    <textarea cols="30" rows="3" placeholder="Add comment"></textarea><button>post</button>
+    {% endif %}
 
 </div>
 

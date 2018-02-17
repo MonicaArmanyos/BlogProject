@@ -23,6 +23,7 @@ class Posts(models.Model):
 
 class Comments(models.Model):
 	text=models.CharField(max_length = 200)
+	created_at = models.DateTimeField(default=datetime.now, blank=True)
 	user = models.ForeignKey(User)
 	post=models.ForeignKey(Posts)
 	def __str__(self):
@@ -33,6 +34,7 @@ class Replies(models.Model):
 	text = models.CharField(max_length=200)
 	user = models.ForeignKey(User)
 	comment=models.ForeignKey(Comments)
+	created_at = models.DateTimeField( blank=True, default=datetime.now)
 	def __str__(self):
 		return self.text
 

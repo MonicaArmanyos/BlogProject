@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Categories, Posts, Tags
+from .models import Categories, Posts, Tags , Comments , Replies
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
@@ -72,5 +72,7 @@ def post(request,post_id):
     ctg=Categories.objects.get(id=pst.category_id)
     Alltags=pst.post_tags.filter(post=post_id)
     #or Alltags=pst.post_tags.all() would also give all the tags of the post
-    context={'post':pst,'category':ctg.category_name,'tags':Alltags}
+    comments=Comments.objects.filter(post_id=post_id)
+    replies=Replies.objects.filter(comment_id__in=comments)
+    context={'post':pst,'category':ctg.category_name,'tags':Alltags,'comments':comments,'replies':replies}
     return render(request, 'post.html',context)
