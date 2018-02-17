@@ -14,15 +14,14 @@ def homepage(request):
 def search(request):
     tag=Tags.objects.get(tag_name__contains=request.POST['term'])
     found_postt=Posts.objects.filter(tag=tag.id)
-    found_posts = Posts.objects.filter(title__icontains=request.POST['term']).order_by('created_at')
+    found_posts = Posts.objects.filter(title__icontains=request.POST['term']).order_by('-created_at')
     context = {"found": found_posts,"foundd":found_postt}
     return render(request, "search.html", context)
 
-
-
-def index(request):
-    return  render(request,"homepage.html")
-
+def getCategoryPosts(request, cat_id):
+    get_category = Categories.objects.get(id=cat_id)
+    context = {'allPosts':Posts.objects.filter(category_id=get_category.id).order_by('-created_at')}
+    return render(request, "homepage/homepage.html", context)
 
 @login_required
 def user_logout(request):
@@ -33,7 +32,6 @@ def user_logout(request):
 @login_required
 def special(request):
     return HttpResponse("you are loggin")
-
 
 
 def register(request):

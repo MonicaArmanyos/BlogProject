@@ -97,7 +97,7 @@ def editWord(request,word_id):
 	
 
 def deleteWord(request,word_id):
-    word=Words.objects.get(id=word_id)
+    word=ForbiddenWords.objects.get(id=word_id)
     word.delete()
     return HttpResponseRedirect('/admin/allWords')
  
