@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Categories, Posts
+from .models import Categories, Posts, Tags
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
@@ -68,5 +68,9 @@ def user_login(request):
 
 
 def post(request,post_id):
-    context={'post':Posts.objects.get(id=post_id)}
+    pst=Posts.objects.get(id=post_id)
+    ctg=Categories.objects.get(id=pst.category_id)
+    Alltags=pst.post_tags.filter(post=post_id)
+    #or Alltags=pst.post_tags.all() would also give all the tags of the post
+    context={'post':pst,'category':ctg.category_name,'tags':Alltags}
     return render(request, 'post.html',context)

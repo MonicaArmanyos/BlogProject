@@ -8,7 +8,24 @@
 {% extends "homepage/base.html" %}
 {% block main_block %}
     {% load static %}
+<div>
+    Category: {{category}}
+
+</div>
+<div>Tags:
+    {% for t in tags%}
+       {{t}}
+    {% endfor %}
+</div>
 <h1>{{post.title}}</h1>
+<div>
+    <img src="{{post.picture}}"/>
+</div>
+<div>{{post.content}}</div>
+<div id="comments">
+    <h2>Comments:</h2>
+
+</div>
 
 {% endblock %}
 </body>

@@ -46,7 +46,8 @@ class Likes(models.Model):
 
 class Tags(models.Model):
 	tag_name=models.CharField(max_length = 15)
-	post = models.ManyToManyField(Posts)
+	post = models.ManyToManyField(Posts,related_name='post_tags')
+	#related_name is the name you use when accessing the model from the related one(Posts model)
 	def __str__(self):
 		return self.tag_name
 
