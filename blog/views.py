@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from django.core import serializers
 
 def homepage(request):
     context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()[:5]}
@@ -29,13 +30,14 @@ def subscribe (request ,cat_id ,user_id):
     sub=CategoryUser.objects.create(category_id=cat_id ,user_id=user_id)
     sub.save()
     #return HttpResponse()
-    return JsonResponse({"ana aho",True},safe=False)
+    return JsonResponse(serializers.serialize('json',True),safe=False)
+
 
 def unsubscribe (request ,cat_id ,user_id):
     unsub=CategoryUser.objects.get(category_id=cat_id ,user_id=user_id)
     unsub.delete()
     #return HttpResponse()
-    return JsonResponse({"ana mesh aho",True},safe=False)
+    return JsonResponse(serializers.serialize('json',True),safe=False)
 
 
 @login_required

@@ -21,7 +21,9 @@
                         <li class="active"><a href="/blog/homepage/{{Category.id}}">{{Category.category_name}}</a></li>
 
                         {%if user.is_authenticated %}
-                        <button class="btn btn-danger Subcribe">Subcribe</button>
+                        <button class="btn btn-danger Subcribe " value="{{Category.id}}" >Subcribe
+                        </button>
+
                         {%endif%}
                     </ul>
                 {%  endfor  %}
