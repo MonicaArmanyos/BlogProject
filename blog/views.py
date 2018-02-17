@@ -65,13 +65,16 @@ def user_login(request):
 
 def getProduct(request,post_id):
     pst=Posts.objects.filter(id=post_id)
-    context={"post":pst[0]}
-    return render(request,"postdetails/get_post.html",context);
+    countlikes = Likes.objects.all().filter(state=1, post=pst).count()
+    countdislike = Likes.objects.all().filter(state=0, post=pst).count()
+    context={"post":pst[0] , "plikes":countlikes ,"pdislike":countdislike}
+    return render(request,"postdetails/get_post.html",context)
 
 
 def makelike(request,post_id):
     if request.user.is_authenticated():
             post = Posts.objects.filter(id=post_id)
+
             record=Likes.objects.all().filter(state=1, user=request.user, post=post[0])
             if record.exists():
                 deletelike=Likes.objects.get(state=1, user=request.user, post=post[0])
