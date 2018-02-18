@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
-from django.utils import timezone
+from django.shortcuts import redirect
 
 def homepage(request):
     context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()}
@@ -79,6 +79,7 @@ def post(request,post_id):
     for word in Rej_words:
         forbiddenWords.append(word.word)
     comments=Comments.objects.filter(post_id=post_id)
+    replies = Replies.objects.filter(comment_id__in=comments)
     for comment in comments:
         words=comment.text.split()
         comment.text=""
@@ -86,7 +87,13 @@ def post(request,post_id):
             if comm_word in forbiddenWords:
                 comm_word='*'*len(comm_word)
             comment.text+=" "+comm_word
-    replies=Replies.objects.filter(comment_id__in=comments)
+    for reply in replies:
+        words= reply.text.split()
+        reply.text=""
+        for replyWord in words:
+            if replyWord in forbiddenWords:
+                replyWord='*'*len(replyWord)
+            reply.text+=" "+replyWord
     context={'post':pst,'category':ctg.category_name,'tags':Alltags,'comments':comments,'replies':replies}
     return render(request, 'post.html',context)
 
@@ -101,5 +108,17 @@ def comment(request):
     return JsonResponse({'foo': 'bar'})
 
 
-def reply(requst):
-    pass
+def reply(request):
+    comm = request.GET.get('comment', None)
+    userFK = request.GET.get('user', None)
+    userObj= User.objects.get(id=userFK)
+    commentFK= request.GET.get('comId', None)
+    post_id= request.GET.get('postId', None)
+    commentObj= Comments.objects.get(id=commentFK)
+    comment_replies=commentObj.num_of_replies
+    if comment_replies == 0:
+        Comments.objects.filter(id=commentFK).update(num_of_replies=1)
+        replyObj=Replies(user=userObj , comment=commentObj , text =comm)
+        replyObj.save()
+
+    return JsonResponse({'foo': 'bar'})
