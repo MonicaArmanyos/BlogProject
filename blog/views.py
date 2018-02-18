@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Categories, Posts, Tags , Comments , Replies , ForbiddenWords
+from .models import Likes
 from django.http import HttpResponse , JsonResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
@@ -122,3 +123,49 @@ def reply(request):
         replyObj.save()
 
     return JsonResponse({'foo': 'bar'})
+
+
+def makelike(request,post_id):
+    if request.user.is_authenticated():
+            post = Posts.objects.filter(id=post_id)
+
+            record=Likes.objects.all().filter(state=1, user=request.user, post=post[0])
+            record2=Likes.objects.all().filter(state=0, user=request.user, post=post[0])
+            if record.exists():
+                deletelike=Likes.objects.get(state=1, user=request.user, post=post[0])
+                deletelike.delete()
+            else:
+                Likes.objects.create(state=1, user=request.user, post=post[0])
+
+
+            if record2.exists():
+                deletelike=Likes.objects.get(state=0, user=request.user, post=post[0])
+                deletelike.delete()
+
+
+
+
+    return HttpResponse("data")
+
+
+def makedislike(request,post_id):
+    if request.user.is_authenticated():
+            post = Posts.objects.filter(id=post_id)
+            record=Likes.objects.all().filter(state=0, user=request.user, post=post[0])
+            record2 = Likes.objects.all().filter(state=1, user=request.user, post=post[0])
+
+            if record.exists():
+                deletelike=Likes.objects.get(state=0, user=request.user, post=post[0])
+                deletelike.delete()
+            else:
+                Likes.objects.create(state=0, user=request.user, post=post[0])
+
+            if record2.exists():
+                deletelike = Likes.objects.get(state=1, user=request.user, post=post[0])
+                deletelike.delete()
+
+
+
+    return JsonResponse({'foo': 'bar'})
+
+
