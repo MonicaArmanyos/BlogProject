@@ -26,19 +26,26 @@ def getCategoryPosts(request, cat_id):
     context = {'allPosts':Posts.objects.filter(category_id=get_category.id).order_by('-created_at')}
     return render(request, "homepage/homepage.html", context)
 
-def subscribe (request ,cat_id ,user_id):
+def subscribe (request):
+    cat_id=request.GET.get('catid',None)
+    user_id=request.user.id
     sub=CategoryUser.objects.create(category_id=cat_id ,user_id=user_id)
     sub.save()
-    #return HttpResponse()
-    return JsonResponse(serializers.serialize('json',True),safe=False)
+    responseData = {
+        'json': True
+    }
+    return JsonResponse(responseData,safe=False)
 
 
-def unsubscribe (request ,cat_id ,user_id):
+def unsubscribe (request):
+    cat_id=request.GET.get('catid',None)
+    user_id=request.user.id
     unsub=CategoryUser.objects.get(category_id=cat_id ,user_id=user_id)
     unsub.delete()
-    #return HttpResponse()
-    return JsonResponse(serializers.serialize('json',True),safe=False)
-
+    responseData = {
+        'json': True
+    }
+    return JsonResponse(responseData,safe=False)
 
 @login_required
 def user_logout(request):

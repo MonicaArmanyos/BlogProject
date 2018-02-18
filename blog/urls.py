@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^special$', views.special),
     url(r'^search/$', views.search),
     url(r'^homepage/(?P<cat_id>[0-9]+$)', views.getCategoryPosts),
-    url(r'^homepage/sub/(?P<cat_id>[0-9]+)/(?P<user_id>[0-9]+$)', views.subscribe),
-    url(r'^homepage/unsub/(?P<cat_id>[0-9]+)/(?P<user_id>[0-9]+$)', views.unsubscribe),
+    url(r'^sub/$', views.subscribe),
+    url(r'^unsub/$', views.unsubscribe),
 ]

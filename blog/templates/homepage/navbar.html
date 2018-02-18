@@ -1,63 +1,73 @@
+<html>
+<head>
 
-<header id="home" class="header">
-    <div class="main_menu_bg navbar-fixed-top">
-        <div class="container">
-            <div class="row">
-                <div class="nave_menu">
-                    <nav class="navbar navbar-default">
-                        <div class="container-fluid">
-                            <!-- Brand and toggle get grouped for better mobile display -->
-                            <div class="navbar-header">
-                                <a class="navbar-brand" href="#"> <i class="fa fa-cube fa-lg"> </i> <b>Blog</b></a>
-                                    <div class="logo">
-                                        <img src="images/logo.png" alt="" />
-                                    </div>
-                               <div class="search navbar-center"><form method="GET" action="/blog/search/">
+</head>
+<body>
+<div class="main-panel">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
 
-                                   <input type="text" class="form-control" id="search" name="term" placeholder="Search for...">
-                                   <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="submit" >Go!</button>
-                </span>
-                               </form></div>
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar bar1"></span>
+                    <span class="icon-bar bar2"></span>
+                    <span class="icon-bar bar3"></span>
+                </button>
+                <a class="navbar-brand" href="#">  Blog </a>
+            </div>
+
+
+            <div class="collapse navbar-collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/homepage/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="/blog/register">register</a>
+                    </li>
+
+                    {%if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link"  href="/blog/logout">logout</a>
+                        </li>
+                    {%else%}
+                        <li class="nav-item">
+                            <a class="nav-link"  href="/blog/login">login</a>
+                        </li>
+                    {%endif%}
+                    {%if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link"  href="#">Manage website</a>
+                        </li>
+
+                    {%endif%}
+                </ul>
+                <div class="text-center">
+                    <ul >
+                        <li >
+                            <div class="collapse navbar-collapse">
+                                <form method="GET" action="/blog/search/" class="search">
+
+                                    <input type="search" class="form-control" id="search" name="term" placeholder="Search for...">
+
+                                </form>
+<form>
+    <input type="radio" name="searchby" value="Tag" checked> Tag
+    <input type="radio" name="searchby" value="Title"> Title
+</form>
+
                             </div>
-
-                            <!-- Collect the nav links, forms, and other content for toggling -->
-                            <div class="collapse navbar-collapse navbar-right ml-auto" id="app-nav">
-                                <ul class="nav navbar-nav">
-
-                                    <li><a href="/blog/homepage/">Home</a></li>
-
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link"  href="/blog/register">register</a>
-                                    </li>
-
-                                    {%if user.is_authenticated %}
-                                        <li class="nav-item">
-                                            <a class="nav-link"  href="/blog/logout">logout</a>
-                                        </li>
-                                    {%else%}
-                                        <li class="nav-item">
-                                            <a class="nav-link"  href="/blog/user_login">login</a>
-                                        </li>
-                                    {%endif%}
-
-                                    {%if user.is_superuser %}
-                                        <li class="nav-item">
-                                            <a class="nav-link"  href="#">Manage website</a>
-                                        </li>
-
-                                    {%endif%}
-                                </ul>
-
-                            </div><!-- /.navbar-collapse -->
-                        </div><!-- /.container-fluid -->
-                    </nav>
+                        </li>
+                    </ul>
                 </div>
-            </div><!--End of row -->
+            </div>
 
-        </div><!--End of container -->
+        </div>
+    </nav>
+</div>
 
-    </div>
-</header> <!--End of header -->
 
+</body>
+</html>

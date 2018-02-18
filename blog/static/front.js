@@ -5,28 +5,40 @@
         window.location = "items.php?do=manage&itemid=" + ui.item.value;
     }
 });
+
+
+if rating is None:
+    return HttpResponse(status=400) ## or some error.
 */
-$(".Subcribe").on('click',function() {
-    user_id =$(".Subcribe").request.user.id ;
-    cat_id = $(".Subcribe").value();
-    $(this).toggleClass('Subcribe');
-    if($(this).hasClass('Subcribe')){
+$(".Subscribe").on('click',function() {
+    cat_id = $(this).val();
+    btn=this;
+    $(btn).toggleClass('Subcribe');
+    if($(btn).hasClass('Subcribe')) {
         $.ajax({
 
-            url: "http://127.0.0.1:8000/blog/homepage/sub"+user_id+"/"+cat_id+"/" ,
-            success: function() {
+            url: '/blog/sub',
+            data: {
+                'catid': cat_id,
+            },
+            dataType: 'json',
+            success: function () {
+                $(btn).text('Unsubscribe');
                 console.log("ana subs")
-                }
-            })
+            }
+        })
+    }else {
 
-        $(this).text('UnSubcribe');
-    } else {
-        $(this).text('Subcribe');
         $.ajax({
 
-            url: "http://127.0.0.1:8000/blog/homepage/unsub"+user_id+"/"+cat_id+"/" ,
-            success: function() {
-                console.log("ana mesh sub");
+            url: '/blog/unsub',
+            data: {
+                'catid': cat_id,
+            },
+            dataType: 'json',
+            success: function () {
+                $(btn).text('Subscribe');
+                console.log("ana msh subs")
             }
         })
     }
