@@ -1,20 +1,9 @@
-/*$("#searchitem").autocomplete({
-    source: "search.php",
-    minLength: 3,
-    select: function (event, ui) {
-        window.location = "items.php?do=manage&itemid=" + ui.item.value;
-    }
-});
 
-
-if rating is None:
-    return HttpResponse(status=400) ## or some error.
-*/
-$(".Subscribe").on('click',function() {
+$(".subs").on('click',function() {
     cat_id = $(this).val();
     btn=this;
-    $(btn).toggleClass('Subcribe');
-    if($(btn).hasClass('Subcribe')) {
+    if($(btn).text()=='Subscribe') {
+        $(btn).text('Unsubscribe');
         $.ajax({
 
             url: '/blog/sub',
@@ -23,12 +12,11 @@ $(".Subscribe").on('click',function() {
             },
             dataType: 'json',
             success: function () {
-                $(btn).text('Unsubscribe');
-                console.log("ana subs")
+
             }
         })
-    }else {
-
+    } else {
+        $(btn).text('Subscribe');
         $.ajax({
 
             url: '/blog/unsub',
@@ -37,8 +25,7 @@ $(".Subscribe").on('click',function() {
             },
             dataType: 'json',
             success: function () {
-                $(btn).text('Subscribe');
-                console.log("ana msh subs")
+
             }
         })
     }

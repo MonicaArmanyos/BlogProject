@@ -6,25 +6,48 @@ from .forms import UserForm
 from django.contrib.auth import authenticate , login , logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core import serializers
 
 def homepage(request):
-    context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()[:5]}
+    subcat= sub(request)
+    context = {'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()[:5] ,'subcat': subcat}
     return render(request, 'homepage/homepage.html', context)
 
+
+def homepage(request):
+    subcat= sub(request)
+    allPosts = Posts.objects.all().order_by("-created_at")
+    paginator = Paginator(allPosts, 5)
+    page = request.GET.get('page')
+    try:
+        posts= paginator.page(page)
+    except PageNotAnInteger:
+        posts= paginator.page(1)
+    except EmptyPage:
+        posts= paginator.page(paginator.num_pages)
+    context = {'allCategories':Categories.objects.all(), 'allPosts':posts, "subcat": subcat}
+    return render(request, 'homepage/homepage.html', context)
+
+
 def search(request):
-    tag=Tags.objects.get(tag_name__contains=request.POST['term'])
-    found_postt=Posts.objects.filter(tag=tag.id)
-    found_posts = Posts.objects.filter(title__icontains=request.POST['term']).order_by('-created_at')
-    context = {"found": found_posts,"foundd":found_postt}
-    return render(request, "search.html", context)
+    found_posts = Posts.objects.filter(title__icontains=request.GET['term'])
+    try:
+        tag=Tags.objects.get(tag_name__contains=request.GET['term'])
+        found_postt=Posts.objects.filter(tag=tag.id)
+    except:
+        return render(request, "homepage/search.html",{'allPosts':found_posts,'allCategories':Categories.objects.all()})
+    else:
+        return render(request, "homepage/search.html",{'allPosts':found_postt,'allCategories':Categories.objects.all()})
+
 
 def getCategoryPosts(request, cat_id):
     get_category = Categories.objects.get(id=cat_id)
     context = {'allPosts':Posts.objects.filter(category_id=get_category.id).order_by('-created_at')}
     return render(request, "homepage/homepage.html", context)
+
 
 def subscribe (request):
     cat_id=request.GET.get('catid',None)
@@ -34,6 +57,7 @@ def subscribe (request):
     responseData = {
         'json': True
     }
+
     return JsonResponse(responseData,safe=False)
 
 
@@ -45,7 +69,15 @@ def unsubscribe (request):
     responseData = {
         'json': True
     }
-    return JsonResponse(responseData,safe=False)
+
+
+def sub(request):
+    catsub=Categories.objects.filter(user=request.user.id)
+    cat_sub=[]
+    for i in catsub:
+        cat_sub.append(i.id)
+    return cat_sub
+
 
 @login_required
 def user_logout(request):

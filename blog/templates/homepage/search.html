@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="posts col-md-9">
+    <h3 >Top Posts</h3>
+
+    {% for Post in allPosts %}
+
+        <h5 href="#">{{Post.title}}</h5>
+
+        <div><img src="{{post.picture.url}}"></div>
+        <div>
+            <p> {{Post.content}} </p>
+        </div>
+
+
+    {%  endfor  %}
+</div>
+</body>
+</html>
