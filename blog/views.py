@@ -100,8 +100,6 @@ def makelike(request,post_id):
 
 
 
-
-
     return HttpResponse("data")
 
 
