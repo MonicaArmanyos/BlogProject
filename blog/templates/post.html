@@ -41,7 +41,7 @@
         {% endfor %}
 
        <textarea cols="30" rows="3" placeholder="Reply"></textarea><button>post</button>
-   
+
 
    </div>
     <br/>
@@ -51,7 +51,10 @@
      {%if user.is_authenticated %}
     <textarea cols="30" rows="3" placeholder="Add comment"/><button>post</button>
     {% else %}
-    <textarea cols="30" rows="3" placeholder="Add comment"></textarea><button>post</button>
+    <form method="post" action="">
+    <textarea  cols="30" rows="3" placeholder="Add comment"></textarea>
+        <input type="submit" value="Post">
+        </form>
     {% endif %}
 
 </div>

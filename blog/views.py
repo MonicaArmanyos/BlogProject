@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Categories, Posts, Tags , Comments , Replies
+from .models import Categories, Posts, Tags , Comments , Replies , ForbiddenWords
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
@@ -72,7 +72,24 @@ def post(request,post_id):
     ctg=Categories.objects.get(id=pst.category_id)
     Alltags=pst.post_tags.filter(post=post_id)
     #or Alltags=pst.post_tags.all() would also give all the tags of the post
+    forbiddenWords=[]
+    Rej_words=ForbiddenWords.objects.all()
+    for word in Rej_words:
+        forbiddenWords.append(word.word)
     comments=Comments.objects.filter(post_id=post_id)
+    for comment in comments:
+        words=comment.text.split()
+        comment.text=""
+        for comm_word in words:
+            if comm_word in forbiddenWords:
+                comm_word='*'*len(comm_word)
+            comment.text+=" "+comm_word
     replies=Replies.objects.filter(comment_id__in=comments)
     context={'post':pst,'category':ctg.category_name,'tags':Alltags,'comments':comments,'replies':replies}
     return render(request, 'post.html',context)
+
+def comment(request):
+    pass
+
+def reply(requst):
+    pass
