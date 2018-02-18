@@ -39,13 +39,13 @@
 
             {% endif %}
         {% endfor %}
-
-        <form method="post" >
-             {% csrf_token %}
-        <textarea  cols="30" rows="3" placeholder="Reply"></textarea>
-        <input type="submit" value="Post">
+        {% if comment.num_of_replies == 0 %}
+        <form  data-user=" {{post.user.id}} " data-post="{{post.id}}" method="get" >
+         {% csrf_token %}
+            <textarea  cols="30" rows="3" placeholder="Reply"></textarea>
+        <input   type="submit" value="Post">
         </form>
-
+        {% endif %}
 
    </div>
     <br/>
@@ -53,12 +53,14 @@
     <br/>
     {% endfor %}
      {%if user.is_authenticated %}
-    <textarea cols="30" rows="3" placeholder="Add comment"/><button>post</button>
+
     {% else %}
-    <form id="comment" data-user=" {{post.user.id}} " data-post="{{post.id}}" method="get" >
-         {% csrf_token %}
+    <form id="comment"  method="post" >
+         {%csrf_token%}
+  	  	{{form.as_p}}
+
     <textarea id="txt" cols="30" rows="3" placeholder="Add comment"></textarea>
-        <input  id="post"  type="submit" value="Post">
+        <input data-user="{{post.user.id}}" data-post="{{post.id}}" id="post"  type="submit" value="Post">
         </form>
     {% endif %}
 

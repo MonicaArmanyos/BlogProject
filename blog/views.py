@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from .models import Categories, Posts, Tags , Comments , Replies , ForbiddenWords
-from django.http import HttpResponse
+from django.http import HttpResponse , JsonResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
+from django.utils import timezone
 
 def homepage(request):
     context = {'homepage': Categories.objects.all(), 'allCategories':Categories.objects.all(), 'allPosts':Posts.objects.all()}
@@ -97,5 +98,8 @@ def comment(request):
     pstObj=Posts.objects.get(id=postFk)
     cObj=Comments(user=userObj, post=pstObj, text=comm)
     cObj.save()
+    return JsonResponse({'foo': 'bar'})
+
+
 def reply(requst):
     pass

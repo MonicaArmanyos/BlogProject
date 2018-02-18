@@ -26,6 +26,7 @@ class Comments(models.Model):
 	created_at = models.DateTimeField(default=datetime.now, blank=True)
 	user = models.ForeignKey(User)
 	post=models.ForeignKey(Posts)
+	num_of_replies = models.IntegerField(default=0)
 	def __str__(self):
 		return self.text
 
@@ -35,7 +36,6 @@ class Replies(models.Model):
 	user = models.ForeignKey(User)
 	comment=models.ForeignKey(Comments)
 	created_at = models.DateTimeField( blank=True, default=datetime.now)
-	num_of_replies=models.IntegerField(default=0)
 	def __str__(self):
 		return self.text
 
