@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+</head>
+<body>
+{% extends "homepage/base.html" %}
+{% block main_block %}
+    {% load static %}
+<div>
+    Category: {{category}}
+
+</div>
+<div>Tags:
+    {% for t in tags%}
+       {{t}}
+    {% endfor %}
+</div>
+<h1>{{post.title}}</h1>
+<div>
+    <img src="{{post.picture}}"/>
+</div>
+<div>{{post.content}}</div>
+<div id="comments">
+    <h2>Comments:</h2>
+     {% for comment in comments %}
+   <div>
+       <div> {{comment.user}}</div>
+       <div> {{comment.created_at}}</div>
+       <div> {{comment.text}}</div>
+
+        {% for reply in replies %}
+            {% if reply.comment_id == comment.id %}
+
+               Reply from: <div> {{reply.user}}</div>
+                <div> {{reply.created_at}}</div>
+                <div> {{reply.text}}</div>
+
+            {% endif %}
+        {% endfor %}
+
+        <form method="post" >
+             {% csrf_token %}
+        <textarea  cols="30" rows="3" placeholder="Reply"></textarea>
+        <input type="submit" value="Post">
+        </form>
+
+
+   </div>
+    <br/>
+    <hr/>
+    <br/>
+    {% endfor %}
+     {%if user.is_authenticated %}
+    <textarea cols="30" rows="3" placeholder="Add comment"/><button>post</button>
+    {% else %}
+    <form id="comment" data-user=" {{post.user.id}} " data-post="{{post.id}}" method="get" >
+         {% csrf_token %}
+    <textarea id="txt" cols="30" rows="3" placeholder="Add comment"></textarea>
+        <input  id="post"  type="submit" value="Post">
+        </form>
+    {% endif %}
+
+</div>
+<script src="{% static 'jquery-3.1.1.js' %}"></script>
+ <script src="{% static 'js/app.js' %}"></script>
+
+{% endblock %}
+</body>
+</html>

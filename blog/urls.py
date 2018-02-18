@@ -8,5 +8,7 @@ urlpatterns = [
     url(r'^logout$', views.user_logout),
     url(r'^user_login$', views.user_login),
     url(r'^special$', views.special),
-
+    url(r'^post/(?P<post_id>[0-9]+)',views.post),
+    url(r'^comment$', views.comment),
+    url(r'^reply$', views.reply),
 ]

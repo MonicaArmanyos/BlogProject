@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from .models import Categories, Posts
+from .models import Categories, Posts, Tags , Comments , Replies , ForbiddenWords
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .forms import UserForm
 from django.contrib.auth import authenticate , login , logout
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
 
@@ -67,3 +68,34 @@ def user_login(request):
         return render(request, 'login&&register/login.html', {})
 
 
+def post(request,post_id):
+    pst=Posts.objects.get(id=post_id)
+    ctg=Categories.objects.get(id=pst.category_id)
+    Alltags=pst.post_tags.filter(post=post_id)
+    #or Alltags=pst.post_tags.all() would also give all the tags of the post
+    forbiddenWords=[]
+    Rej_words=ForbiddenWords.objects.all()
+    for word in Rej_words:
+        forbiddenWords.append(word.word)
+    comments=Comments.objects.filter(post_id=post_id)
+    for comment in comments:
+        words=comment.text.split()
+        comment.text=""
+        for comm_word in words:
+            if comm_word in forbiddenWords:
+                comm_word='*'*len(comm_word)
+            comment.text+=" "+comm_word
+    replies=Replies.objects.filter(comment_id__in=comments)
+    context={'post':pst,'category':ctg.category_name,'tags':Alltags,'comments':comments,'replies':replies}
+    return render(request, 'post.html',context)
+
+def comment(request):
+    comm = request.GET.get('comment', None)
+    userFk=request.GET.get('user',None)
+    userObj=User.objects.get(id=userFk)
+    postFk=request.GET.get('post',None)
+    pstObj=Posts.objects.get(id=postFk)
+    cObj=Comments(user=userObj, post=pstObj, text=comm)
+    cObj.save()
+def reply(requst):
+    pass

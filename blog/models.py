@@ -23,16 +23,19 @@ class Posts(models.Model):
 
 class Comments(models.Model):
 	text=models.CharField(max_length = 200)
+	created_at = models.DateTimeField(default=datetime.now, blank=True)
 	user = models.ForeignKey(User)
 	post=models.ForeignKey(Posts)
 	def __str__(self):
-		return self.content
+		return self.text
 
 
 class Replies(models.Model):
 	text = models.CharField(max_length=200)
 	user = models.ForeignKey(User)
 	comment=models.ForeignKey(Comments)
+	created_at = models.DateTimeField( blank=True, default=datetime.now)
+	num_of_replies=models.IntegerField(default=0)
 	def __str__(self):
 		return self.text
 
@@ -46,7 +49,8 @@ class Likes(models.Model):
 
 class Tags(models.Model):
 	tag_name=models.CharField(max_length = 15)
-	post = models.ManyToManyField(Posts)
+	post = models.ManyToManyField(Posts,related_name='post_tags')
+	#related_name is the name you use when accessing the model from the related one(Posts model)
 	def __str__(self):
 		return self.tag_name
 
