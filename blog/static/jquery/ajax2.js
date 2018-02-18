@@ -6,7 +6,6 @@ var postid=$(this).attr("data-post")
 likestatus=$(".markdislike").text()
 dislikecounter=$("#sdislike").text()
 dislikecounter=parseInt(dislikecounter)
-console.log(dislikecounter)
 if(likestatus=="dislike")
 {
 $(".markdislike").text("disliked")
@@ -21,10 +20,29 @@ dislikecounter=dislikecounter-1;
 
 $("#sdislike").text(dislikecounter)
 
+
+
+likecounters=$("#slike").text()
+liketatus=$(".marklike").text()
+likecounters=parseInt(likecounters)
+
+
+if(liketatus=="liked")
+{
+$(".marklike").text("like")
+likecounters=likecounters-1
+$("#slike").text(likecounters)
+
+}
+
+
+
+
+
   $.ajax({
        url:"http://127.0.0.1:8000/blog/dislike/"+postid,
        success:function (data) {
-    alert(postid)
+
        }
 
 })

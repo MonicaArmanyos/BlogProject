@@ -85,11 +85,20 @@ def makelike(request,post_id):
             post = Posts.objects.filter(id=post_id)
 
             record=Likes.objects.all().filter(state=1, user=request.user, post=post[0])
+            record2=Likes.objects.all().filter(state=0, user=request.user, post=post[0])
             if record.exists():
                 deletelike=Likes.objects.get(state=1, user=request.user, post=post[0])
                 deletelike.delete()
             else:
                 Likes.objects.create(state=1, user=request.user, post=post[0])
+
+
+            if record2.exists():
+                deletelike=Likes.objects.get(state=0, user=request.user, post=post[0])
+                deletelike.delete()
+
+
+
 
 
 
@@ -100,11 +109,17 @@ def makedislike(request,post_id):
     if request.user.is_authenticated():
             post = Posts.objects.filter(id=post_id)
             record=Likes.objects.all().filter(state=0, user=request.user, post=post[0])
+            record2 = Likes.objects.all().filter(state=1, user=request.user, post=post[0])
+
             if record.exists():
                 deletelike=Likes.objects.get(state=0, user=request.user, post=post[0])
                 deletelike.delete()
             else:
                 Likes.objects.create(state=0, user=request.user, post=post[0])
+
+            if record2.exists():
+                deletelike = Likes.objects.get(state=1, user=request.user, post=post[0])
+                deletelike.delete()
 
 
 
