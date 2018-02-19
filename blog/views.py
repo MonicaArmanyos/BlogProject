@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Categories, Posts ,Tags ,CategoryUser ,Comments,Replies,ForbiddenWords,Likes
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import UserForm
+from .forms import RegUserForm
 from django.contrib.auth import authenticate , login , logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import  login_required
@@ -25,6 +25,7 @@ def homepage(request):
         posts= paginator.page(paginator.num_pages)
     context = {'allCategories':Categories.objects.all(), 'allPosts':posts, "subcat": subcat}
     return render(request, 'homepage/homepage.html', context)
+
 
 
 def search(request):
@@ -73,62 +74,28 @@ def sub(request):
         cat_sub.append(i.id)
     return cat_sub
 
-@login_required
-def user_logout(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('index'))
-
-
-@login_required
-def special(request):
-    return HttpResponse("you are loggin")
-
-
-
-def register(request):
-    registered=False
-    if request.method=="POST":
-        user_form=UserForm(request.POST)
-        if user_form.is_valid():
-            user=user_form.save()
-            user.set_password(user.password)
-            user.save()
-            registered=True
-            return HttpResponseRedirect('/blog/home')
-
-        else:
-            #print(user_form.errors)
-            pass
-
-    else:
-        user_form = UserForm()
-        return render(request, "login&&register/registeration.html", {"user_form":user_form , "registered":registered})
-
-
-
-
-def user_login(request):
-    if request.method=='POST':
-        username=request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                login(request,user)
-                return HttpResponseRedirect(reverse('index'))
-            else:
-                return render(request, 'login&&register/login.html', {'info': 0}) #user Not Active
-        else:
-            return render(request, 'login&&register/login.html', {'info':1}) #error in username or password
-
-    else:
-        return render(request, 'login&&register/login.html', {})
-
-
 def post(request,post_id):
+    isliked = 0
+    isdisliked = 0
+
     pst=Posts.objects.get(id=post_id)
+
+    if request.user.is_authenticated():
+        record = Likes.objects.all().filter(state=1, user=request.user, post=pst)
+        record1 = Likes.objects.all().filter(state=0, user=request.user, post=pst)
+        if record.exists():
+            isliked = 1
+        if record1.exists():
+            isdisliked = 1
+
+
+    countlikes = Likes.objects.all().filter(state=1, post=pst).count()
+    countdislike = Likes.objects.all().filter(state=0, post=pst).count()
+
+
+
     ctg=Categories.objects.get(id=pst.category_id)
-    Alltags=pst.post_tags.filter(post=post_id)
+    #Alltags=pst.post_tags.filter(post=post_id)
     #or Alltags=pst.post_tags.all() would also give all the tags of the post
     forbiddenWords=[]
     Rej_words=ForbiddenWords.objects.all()
@@ -150,7 +117,7 @@ def post(request,post_id):
             if replyWord in forbiddenWords:
                 replyWord='*'*len(replyWord)
             reply.text+=" "+replyWord
-    context={'post':pst,'category':ctg.category_name,'tags':Alltags,'comments':comments,'replies':replies}
+    context={'post':pst,'category':ctg.category_name,'comments':comments,'replies':replies, "plikes":countlikes ,"pdislike":countdislike ,"userlike":isliked,"userdislike":isdisliked}
     return render(request, 'post.html',context)
 
 def comment(request):
@@ -222,4 +189,74 @@ def makedislike(request,post_id):
 
 
     return JsonResponse({'foo': 'bar'})
+
+
+
+
+def index(request):
+    return  render(request,"homepage.html")
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
+
+
+@login_required
+def special(request):
+    return HttpResponse("you are loggin")
+
+
+def register(request):
+    usr_form=RegUserForm()
+
+    if request.method=="POST":
+        users = User.objects.all().filter(email=request.POST['email'])
+        if users.exists():
+            return render(request, "login&&register/registeration.html", {"form": usr_form, "dublemail": 1})
+        usr_form = RegUserForm(request.POST)
+        if usr_form.is_valid():
+            usr_form.save()
+            return HttpResponseRedirect("/blog/homepage")
+    return render(request, "login&&register/registeration.html",{"form":usr_form})
+
+
+def user_login(request):
+    if request.method=='POST':
+        username=request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return render(request, 'login&&register/login.html', {'info': 0}) #user Not Active
+        else:
+            return render(request, 'login&&register/login.html', {'info':1}) #error in username or password
+
+    else:
+        return render(request, 'login&&register/login.html', {})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+</head>
+<body>
+{% extends "homepage/base.html" %}
+{% block main_block %}
+    {% load static %}
+<div>
+    Category: {{category}}
+
+</div>
+<div>Tags:
+    {% for i in post.tag.all %}{{i.tag_name}}{% endfor %}
+</div>
+<h1>{{post.title}}</h1>
+<div>
+    <img src="{{post.picture}}"/>
+</div>
+<div>{{post.content}}</div>
+<div id="comments">
+    <h2>Comments:</h2>
+     {% for comment in comments %}
+   <div>
+       <div> {{comment.user}}</div>
+       <div> {{comment.created_at}}</div>
+       <div> {{comment.text}}</div>
+
+        {% for reply in replies %}
+            {% if reply.comment_id == comment.id %}
+
+               Reply from: <div> {{reply.user}}</div>
+                <div> {{reply.created_at}}</div>
+                <div> {{reply.text}}</div>
+
+            {% endif %}
+        {% endfor %}
+        {% if comment.num_of_replies == 0 and user.is_authenticated %}
+        <form  method="post" >
+          {%csrf_token%}
+  	  	  {{form.as_p}}
+            <textarea class="rep" id="{{comment.id}}" cols="30" rows="3" placeholder="Reply"></textarea>
+            <input class="reply" data-post="{{post.id}}"  data-user="{{post.user.id}}" data-comment="{{comment.id}}" type="button" value="Post">
+        </form>
+        {% endif %}
+
+   </div>
+    <br/>
+    <hr/>
+    <br/>
+    {% endfor %}
+
+    <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.user.id}}">
+
+             {% if userlike == 1 %}
+            <span class="marklike">liked</span>
+             {%else%}
+            <span class="marklike">like</span>
+             {%endif%}
+
+         </a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.user.id}}">
+
+             {% if userdislike == 1 %}
+             <span class="markdislike">disliked</span>
+             {%else%}
+            <span class="markdislike">dislike</span>
+             {%endif%}
+
+
+         </a></p>
+
+
+     {%if user.is_authenticated %}
+         <form id="comment"  method="post" >
+         {%csrf_token%}
+  	  	{{form.as_p}}
+
+        <textarea id="txt" cols="30" rows="3" placeholder="Add comment"></textarea>
+        <input data-user="{{post.user.id}}" data-post="{{post.id}}" id="post"  type="submit" value="Post">
+        </form>
+
+
+    {% endif %}
+
+</div>
+    <script src="{%static 'jquery-1.10.2.js' %}"></script>
+ <script src="{% static 'js/app.js' %}"></script>
+    <script src="{%static 'jquery/ajax.js' %}"></script>
+    <script src="{%static 'jquery/ajax2.js' %}"></script>
+
+{% endblock %}
+</body>
+</html>
