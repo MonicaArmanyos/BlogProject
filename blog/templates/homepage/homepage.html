@@ -56,11 +56,11 @@
 
             {% for Post in allPosts %}
 
-                <h5 href="/blog/post/{{Post.id}}">{{Post.title}}</h5>
+                <a href="/blog/post/{{Post.id}}"><h5 >{{Post.title}}</h5></a>
 
                 <div>
                     {% if post.picture %}
-                    <img src="{{post.picture.url}}">
+                    <img src="{{post.picture.url}}" width="50" height="50">
                     {% endif %}
                 </div>
 

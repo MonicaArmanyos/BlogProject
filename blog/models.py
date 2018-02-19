@@ -18,6 +18,13 @@ class Tags(models.Model):
     def __str__(self):
         return self.tag_name
 
+
+
+	####################################
+
+
+#########################################
+
 class Posts(models.Model):
     title=models.CharField(max_length = 50)
     created_at = models.DateTimeField(default=datetime.now, blank=True)

@@ -105,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BlogProject',#database name
         'USER':'root',   # kol wa7ed yekteb his own user and password
-        'PASSWORD':'01200882344na',
+        'PASSWORD':'brody',
         'HOST':'localhost',#default host
         'PORT':'3306'#default port
     }
@@ -126,6 +126,11 @@ USE_L10N = True
 USE_TZ = True
 
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djangoteamg@gmail.com'
+EMAIL_HOST_PASSWORD = 'DjangoTeam'
+EMAIL_PORT = 587
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 

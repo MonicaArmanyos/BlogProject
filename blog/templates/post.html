@@ -13,13 +13,11 @@
 
 </div>
 <div>Tags:
-    {% for t in tags%}
-       {{t}}
-    {% endfor %}
+    {% for i in post.tag.all %}{{i.tag_name}}{% endfor %}
 </div>
 <h1>{{post.title}}</h1>
 <div>
-    <img src="{{post.picture}}"/>
+    <img src="{{post.picture.url}}">
 </div>
 <div>{{post.content}}</div>
 <div id="comments">
@@ -39,12 +37,12 @@
 
             {% endif %}
         {% endfor %}
-        {% if comment.num_of_replies == 0 and user.is_authenticated %}
+        {% if  user.is_authenticated %}
         <form  method="post" >
           {%csrf_token%}
   	  	  {{form.as_p}}
             <textarea class="rep" id="{{comment.id}}" cols="30" rows="3" placeholder="Reply"></textarea>
-            <input class="reply" data-post="{{post.id}}"  data-user="{{post.user.id}}" data-comment="{{comment.id}}" type="button" value="Post">
+            <input class="reply" data-post="{{post.id}}"  data-user="{{post.user.id}}" data-comment="{{comment.id}}" type="button" value="Post" username="post.user.username">
         </form>
         {% endif %}
 
@@ -54,7 +52,7 @@
     <br/>
     {% endfor %}
 
-    <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.user.id}}">
+    <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.id}}">
 
              {% if userlike == 1 %}
             <span class="marklike">liked</span>
@@ -62,7 +60,7 @@
             <span class="marklike">like</span>
              {%endif%}
 
-         </a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.user.id}}">
+         </a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.id}}">
 
              {% if userdislike == 1 %}
              <span class="markdislike">disliked</span>
@@ -80,14 +78,17 @@
   	  	{{form.as_p}}
 
         <textarea id="txt" cols="30" rows="3" placeholder="Add comment"></textarea>
-        <input data-user="{{post.user.id}}" data-post="{{post.id}}" id="post"  type="submit" value="Post">
+        <input data-user="{{post.user.id}}" data-post="{{post.id}}" id="post"  type="submit" value="Post" username="post.user.username">
         </form>
 
 
     {% endif %}
 
 </div>
-
+    <script src="{%static 'jquery-1.10.2.js' %}"></script>
+ <script src="{% static 'js/app.js' %}"></script>
+    <script src="{%static 'jquery/ajax.js' %}"></script>
+    <script src="{%static 'jquery/ajax2.js' %}"></script>
 
 {% endblock %}
 </body>
