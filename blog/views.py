@@ -10,69 +10,82 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core import serializers
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+
+
+def sub(request):
+    catsub = Categories.objects.filter(user=request.user.id)
+    cat_sub = []
+    for i in catsub:
+        cat_sub.append(i.id)
+    return cat_sub
 
 
 def homepage(request):
-    subcat= sub(request)
+    subcat = sub(request)
     allPosts = Posts.objects.all().order_by("-created_at")
     paginator = Paginator(allPosts, 5)
     page = request.GET.get('page')
     try:
-        posts= paginator.page(page)
+        posts = paginator.page(page)
     except PageNotAnInteger:
-        posts= paginator.page(1)
+        posts = paginator.page(1)
     except EmptyPage:
-        posts= paginator.page(paginator.num_pages)
-    context = {'allCategories':Categories.objects.all(), 'allPosts':posts, "subcat": subcat}
+        posts = paginator.page(paginator.num_pages)
+
+    context = {'allCategories': Categories.objects.all(), 'allPosts': posts, "subcat": subcat}
     return render(request, 'homepage/homepage.html', context)
 
 
-
 def search(request):
-    found_posts = Posts.objects.filter(title__icontains=request.GET['term'])
+    found_posts = Posts.objects.filter(title__icontains=request.GET['term']).order_by('-created_at')
     try:
-        tag=Tags.objects.get(tag_name__contains=request.GET['term'])
-        found_postt=Posts.objects.filter(tag=tag.id)
+        tag = Tags.objects.get(tag_name__contains=request.GET['term'])
+        found_postt = Posts.objects.filter(tag=tag.id)
     except:
-        return render(request, "homepage/search.html",{'allPosts':found_posts,'allCategories':Categories.objects.all()})
+        return render(request, "search.html", {'allPosts': found_posts, 'allCategories': Categories.objects.all()})
     else:
-        return render(request, "homepage/search.html",{'allPosts':found_postt,'allCategories':Categories.objects.all()})
+        return render(request, "search.html", {'allPosts': found_postt, 'allCategories': Categories.objects.all()})
 
 
 def getCategoryPosts(request, cat_id):
     get_category = Categories.objects.get(id=cat_id)
-    context = {'allPosts':Posts.objects.filter(category_id=get_category.id).order_by('-created_at')}
+    context = {'allPosts': Posts.objects.filter(category_id=get_category.id).order_by('-created_at')}
     return render(request, "homepage/homepage.html", context)
 
 
-def subscribe (request):
-    cat_id=request.GET.get('catid',None)
-    user_id=request.user.id
-    sub=CategoryUser.objects.create(category_id=cat_id ,user_id=user_id)
+def subscribe(request):
+    cat_id = request.GET.get('catid', None)
+    category = Categories.objects.get(id=cat_id)
+    user_id = request.user.id
+    sub = CategoryUser.objects.create(category_id=cat_id, user_id=user_id)
     sub.save()
+    subject = 'Thanks For Checking The Blog'
+    message = 'You have Subscribed To a New Category Which is : ' + str(category.category_name)
+    from_email = settings.EMAIL_HOST_USER
+    to_list = [request.user.email]
+    send_mail(subject, message, from_email, to_list, fail_silently=True)
+
     responseData = {
         'json': True
     }
 
-    return JsonResponse(responseData,safe=False)
+    return JsonResponse(responseData, safe=False)
 
 
-def unsubscribe (request):
-    cat_id=request.GET.get('catid',None)
-    user_id=request.user.id
-    unsub=CategoryUser.objects.get(category_id=cat_id ,user_id=user_id)
+def unsubscribe(request):
+    cat_id = request.GET.get('catid', None)
+    user_id = request.user.id
+    unsub = CategoryUser.objects.get(category_id=cat_id, user_id=user_id)
     unsub.delete()
     responseData = {
         'json': True
     }
 
+    return JsonResponse(responseData, safe=False)
 
-def sub(request):
-    catsub=Categories.objects.filter(user=request.user.id)
-    cat_sub=[]
-    for i in catsub:
-        cat_sub.append(i.id)
-    return cat_sub
 
 def post(request,post_id):
     isliked = 0
@@ -139,10 +152,10 @@ def reply(request):
     post_id= request.GET.get('postId', None)
     commentObj= Comments.objects.get(id=commentFK)
     comment_replies=commentObj.num_of_replies
-    if comment_replies == 0:
-        Comments.objects.filter(id=commentFK).update(num_of_replies=1)
-        replyObj=Replies(user=userObj , comment=commentObj , text =comm)
-        replyObj.save()
+
+    Comments.objects.filter(id=commentFK).update(num_of_replies=1)
+    replyObj=Replies(user=userObj , comment=commentObj , text =comm)
+    replyObj.save()
 
     return JsonResponse({'foo': 'bar'})
 
@@ -167,12 +180,20 @@ def makelike(request,post_id):
 
 
 
+
+
+
+
+
+
     return HttpResponse("data")
 
 
 def makedislike(request,post_id):
     if request.user.is_authenticated():
         post = Posts.objects.filter(id=post_id)
+        pst = Posts.objects.get(id=post_id)
+
         record=Likes.objects.all().filter(state=0, user=request.user, post=post[0])
         record2 = Likes.objects.all().filter(state=1, user=request.user, post=post[0])
 
@@ -185,6 +206,16 @@ def makedislike(request,post_id):
         if record2.exists():
             deletelike = Likes.objects.get(state=1, user=request.user, post=post[0])
             deletelike.delete()
+
+        postdel = Likes.objects.filter(state=0, post=pst).count()
+        if postdel >= 10:
+            pst.delete()
+            return HttpResponseRedirect("homepage/homepage.html")
+
+
+
+
+
 
 
 

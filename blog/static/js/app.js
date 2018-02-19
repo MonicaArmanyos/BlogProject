@@ -4,7 +4,7 @@ $(document).ready(function(){
         var postId=this.getAttribute('data-post');
         var userId=this.getAttribute('data-user');
         $.ajax({
-            url:"http://127.0.0.1:8000/blog/comment?comment="+commText+"&post="+postId+"&user="+userId,
+            url:"/blog/comment?comment="+commText+"&post="+postId+"&user="+userId,
             data:{
 
             },
@@ -22,7 +22,7 @@ $(document).ready(function(){
         var commText=$("#"+commentId).val();
         alert(commText);
         $.ajax({
-            url:"http://127.0.0.1:8000/blog/reply?comment="+commText+"&comId="+commentId+"&user="+userId,
+            url:"/blog/reply?comment="+commText+"&comId="+commentId+"&user="+userId,
             data:{
 
             },
