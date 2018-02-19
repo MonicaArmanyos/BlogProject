@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,59 +13,58 @@
 {% block main_block %}
     {% load static %}
     <div class="wrapper">
-    <div class="sidebar" data-background-color="white" data-active-color="danger">
+        <div class="sidebar" data-background-color="white" data-active-color="danger">
 
 
 
 
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="#" class="simple-text">
-                    Dashboard
-                </a>
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="#" class="simple-text">
+                        Dashboard
+                    </a>
+                </div>
+
+                <ul class="nav">
+                    <li >
+                        <a href="/admin/admin">
+                            <i></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allUsers">
+                            <i class="ti-user"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="/admin/allCategories">
+                            <i class="ti-panel"></i>
+                            <p>Categories </p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/allPosts">
+                            <i class="ti-view-list-alt"></i>
+                            <p> Posts</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allWords">
+                            <i class="ti-text"></i>
+                            <p>Forbidden Words</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allTags">
+                            <i class="ti-pencil-alt2"></i>
+                            <p>Tags</p>
+                        </a>
+                    </li>
+
+                </ul>
             </div>
-
-            <ul class="nav">
-                <li >
-                    <a href="/admin/admin">
-                        <i></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/allUsers">
-                        <i class="ti-user"></i>
-                        <p>Users</p>
-                    </a>
-                </li>
-                <li >
-                    <a href="/admin/allCategories">
-                        <i class="ti-panel"></i>
-                        <p>Categories </p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="/admin/allPosts">
-                        <i class="ti-view-list-alt"></i>
-                        <p> Posts</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/allWords">
-                        <i class="ti-text"></i>
-                        <p>Forbidden Words</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/allTags">
-                        <i class="ti-pencil-alt2"></i>
-                        <p>Tags</p>
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-        </div>
         </div>
     </div>
 
@@ -76,7 +76,7 @@
             <div class="form">
                 {% csrf_token %}
                 {{ form.as_p}}
-                <button class="btn btn-info" type="submit" class="btn btn-info">Save</button>
+                <button class="btn btn-info" type="submit">Save</button>
             </div>
         </form>
     </div>

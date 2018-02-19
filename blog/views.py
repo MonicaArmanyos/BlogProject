@@ -153,6 +153,7 @@ def post(request,post_id):
     context={'post':pst,'category':ctg.category_name,'tags':Alltags,'comments':comments,'replies':replies}
     return render(request, 'post.html',context)
 
+
 def comment(request):
     comm = request.GET.get('comment', None)
     userFk=request.GET.get('user',None)

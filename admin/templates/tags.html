@@ -2,70 +2,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <title></title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
 </head>
 <body>
 {% extends "base.html" %}
 {% block main_block %}
-{% load static %}
+    {% load static %}
     <div class="wrapper">
-    <div class="sidebar" data-background-color="white" data-active-color="danger">
+        <div class="sidebar" data-background-color="white" data-active-color="danger">
 
 
 
 
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="#" class="simple-text">
-                    Tags
-                </a>
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="#" class="simple-text">
+                        Tags
+                    </a>
+                </div>
+
+                <ul class="nav">
+                    <li >
+                        <a href="/admin/admin">
+                            <i></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allUsers">
+                            <i class="ti-user"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allCategories">
+                            <i class="ti-panel"></i>
+                            <p>Categories </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allPosts">
+                            <i class="ti-view-list-alt"></i>
+                            <p> Posts</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allWords">
+                            <i class="ti-text"></i>
+                            <p>Forbidden Words</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/allTags">
+                            <i class="ti-pencil-alt2"></i>
+                            <p>Tags</p>
+                        </a>
+                    </li>
+
+                </ul>
             </div>
-
-            <ul class="nav">
-                <li >
-                    <a href="/admin/admin">
-                        <i></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/allUsers">
-                        <i class="ti-user"></i>
-                        <p>Users</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/allCategories">
-                        <i class="ti-panel"></i>
-                        <p>Categories </p>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/allPosts">
-                        <i class="ti-view-list-alt"></i>
-                        <p> Posts</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/allWords">
-                        <i class="ti-text"></i>
-                        <p>Forbidden Words</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="/admin/allTags">
-                        <i class="ti-pencil-alt2"></i>
-                        <p>Tags</p>
-                    </a>
-                </li>
-
-            </ul>
         </div>
     </div>
-
 
     <div class="main-panel">
         <nav class="navbar navbar-default">
@@ -91,30 +91,43 @@
                         <li><a href="#">log out </a></li>
                     </ul>
                 </div>
+            </div>
         </nav>
-						 <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Tags</h4>
-                            </div>
-                            <div class="content table-responsive table-full-width" id="tablel">
-	<table border="0"class="table table-striped">
-		<th>Tag</th>		
-		<th>Actions</th>
-    <th> </th>
-		{%  for tag in allTags  %}
-		<tr>
-			<td>{{tag.tag_name}}</td>
-			<td><button class="btn btn-info"><a href = "/admin/editTag/{{tag.id}}">Edit </a></button></td>
-			<td><button class="btn btn-info"><a href = "/admin/deleteTag/{{tag.id}}">Delete </a></button></td>
-		</tr>
-		{%  endfor  %}
-	</table>
-	</div>
-                            <button class="btn btn-info"><a href = "/admin/addTag">Add Tag</a></button></div>
-                                          {% endblock %}
+    </div>
+
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Tags</h4>
+                        </div>
+                        <div class="content table-responsive table-full-width" id="tablel">
+                            <table border="0" class="table table-striped">
+                                <th>Tag</th>
+                                <th>Actions</th>
+                                <th> </th>
+                                {%  for tag in allTags  %}
+                                    <tr>
+                                        <td>{{tag.tag_name}}</td>
+                                        <td><button class="btn btn-info"><a href = "/admin/editTag/{{tag.id}}">Edit </a></button></td>
+                                        <td><button class="btn btn-info"><a href = "/admin/deleteTag/{{tag.id}}">Delete </a></button></td>
+                                    </tr>
+                                {%  endfor  %}
+                            </table>
+                        </div>
+                        <button class="btn btn-info"><a href = "/admin/addTag">Add Tag</a></button></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
 </body>
 </html>

@@ -1,9 +1,10 @@
-body{
+/*body{
     background-image: url("../static/1.jpg");
     background-position:center;
     background-attachment: fixed;
 
 }
+*/
 .sidebar{
    background-color: rgba(0,0,0,0.2);
 }
