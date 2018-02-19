@@ -112,21 +112,25 @@
                                 <th>Content</th>
                                 <th>Picture</th>
                                 <th>Category</th>
-                                <th>Created_at</th>
                                 <th>Author</th>
+                                <th>Created_at</th>
                                 <th>Tags</th>
                                 <th>Actions</th>
                                 <th> </th>
+
                                 {%  for post in allPosts  %}
                                     <tr>
                                         <td>{{post.title}}</td>
                                         <td>{{post.content}}</td>
                                         {% if post.picture %}
                                             <td><img src="{{ post.picture.url }}"></td>
+                                        {% else %}
+                                            <td> </td>
                                         {% endif %}
                                         <td>{{post.category}}</td>
-                                        <td>{{post.created_at}}</td>
                                         <td>{{post.user}}</td>
+                                        <td>{{post.created_at}}</td>
+
                                         <td>{% for i in post.tag.all %}{{i.tag_name}}{% endfor %}</td>
                                         <td><button class="btn btn-info"><a href = "/admin/editPost/{{post.id}}">Edit </a></button></td>
                                         <td><button class="btn btn-info"><a href = "/admin/deletePost/{{post.id}}">Delete </a></button></td>

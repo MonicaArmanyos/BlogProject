@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from blog.models import Categories,Posts,ForbiddenWords,Tags
 from django.contrib.auth.models import User
-from .forms import PostForm,CategoryForm,WordForm,TagForm
+from .forms import PostForm,CategoryForm,WordForm,TagForm,UserForm
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -73,6 +73,7 @@ def deleteCategory(request,category_id):
 def allWords(request):
 	context={"allWords":ForbiddenWords.objects.all()}
 	return render(request,"words.html",context)
+
 def addWord(request):
 	form=WordForm()
 	if request.method=="POST":
@@ -81,8 +82,6 @@ def addWord(request):
 			form.save()
 	                return HttpResponseRedirect('/admin/allWords')
 	return render(request,"newWord.html",{'form':form})
-	
-
 
 def editWord(request,word_id):
 	form=WordForm()
@@ -137,7 +136,16 @@ def deleteTag(request,tag_id):
 def allUsers(request):
 	context={"allUsers":User.objects.all()}
 	return render(request,"users.html",context)
-	
+
+def addUser(request):
+	form=UserForm()
+	if request.method=="POST":
+		form=UserForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/admin/allUsers')
+	return render(request,"newuser.html",{'form':form})
+
 def blockUser(request,user_id):
     user=User.objects.get(id=user_id)
     user.is_active=0

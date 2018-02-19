@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^deleteWord/(?P<word_id>[0-9]+)/$', views.deleteWord),
     url(r'^allTags/$', views.allTags),
     url(r'^addTag/$', views.addTag),
+    url(r'^addUser/$', views.addUser),
     url(r'^editTag/(?P<tag_id>[0-9]+)/$', views.editTag),
     url(r'^deleteTag/(?P<tag_id>[0-9]+)/$', views.deleteTag),
     url(r'^allUsers/$', views.allUsers),
