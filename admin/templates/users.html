@@ -11,62 +11,6 @@
 {% extends "base.html" %}
 {% block main_block %}
     {% load static %}
-    <div class="wrapper">
-        <div class="sidebar" data-background-color="white" data-active-color="danger">
-
-
-
-
-            <div class="sidebar-wrapper">
-                <div class="logo">
-                    <a href="#" class="simple-text">
-                        Tags
-                    </a>
-                </div>
-
-                <ul class="nav">
-                    <li >
-                        <a href="/admin/admin">
-                            <i></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/allUsers">
-                            <i class="ti-user"></i>
-                            <p>Users</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/allCategories">
-                            <i class="ti-panel"></i>
-                            <p>Categories </p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/allPosts">
-                            <i class="ti-view-list-alt"></i>
-                            <p> Posts</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/admin/allWords">
-                            <i class="ti-text"></i>
-                            <p>Forbidden Words</p>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="/admin/allTags">
-                            <i class="ti-pencil-alt2"></i>
-                            <p>Tags</p>
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <div class="main-panel">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -94,10 +38,65 @@
             </div>
         </nav>
     </div>
+    <div class="wrapper">
+        <div class="sidebar" data-background-color="white" data-active-color="danger">
 
 
 
-    <div class="content">
+
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="#" class="simple-text">
+                        Tags
+                    </a>
+                </div>
+
+                <ul class="nav">
+                    <li >
+                        <a href="/admin/admin">
+                            <i></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/allUsers">
+                            <i class="ti-user"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allCategories">
+                            <i class="ti-panel"></i>
+                            <p>Categories </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allPosts">
+                            <i class="ti-view-list-alt"></i>
+                            <p> Posts</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allWords">
+                            <i class="ti-text"></i>
+                            <p>Forbidden Words</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="/admin/allTags">
+                            <i class="ti-pencil-alt2"></i>
+                            <p>Tags</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+
+
+    <div class="content  col-md-offset-3">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -107,25 +106,37 @@
                         </div>
                         <div class="content table-responsive table-full-width" id="tablel">
                             <table border="0" class="table table-striped">
-                                <th>Tag</th>
+                                <th>Username</th>
+                                <th>Email</th>
                                 <th>Actions</th>
-                                <th> </th>
-                                {%  for tag in allTags  %}
+                                <th></th>
+                                {%  for user in allUsers  %}
                                     <tr>
-                                        <td>{{tag.tag_name}}</td>
-                                        <td><button class="btn btn-info"><a href = "/admin/editTag/{{tag.id}}">Edit </a></button></td>
-                                        <td><button class="btn btn-info"><a href = "/admin/deleteTag/{{tag.id}}">Delete </a></button></td>
+                                        {% if user.is_superuser == 1 %}
+                                            <td><font color="red">{{user.username}}</font></td>
+                                            <td><font color="red">{{user.email}}</font></td>
+                                        {% elif user.is_superuser == 0 %}
+                                            <td>{{user.username}} </td>
+
+                                            <td>{{user.email}}</td>
+                                            {% if user.is_active == 1 %}
+                                                <td><a href = "/admin/blockUser/{{user.id}}">Block </a></td>
+                                                <td><a href = "/admin/promoteUser/{{user.id}}">Promote User </a></td>
+                                            {% else %}
+                                                <td><a href = "/admin/unblockUser/{{user.id}}">Unblock </a></td>
+                                            {% endif %}
+                                        {% endif %}
                                     </tr>
                                 {%  endfor  %}
                             </table>
                         </div>
-                        <button class="btn btn-info"><a href = "/admin/addTag">Add Tag</a></button></div>
+                        <button class="btn btn-info"><a href = "/admin/addUser">Add User</a></button></div>
 
                 </div>
             </div>
         </div>
     </div>
-
+    </div>
 
 
 {% endblock %}

@@ -12,6 +12,34 @@
 {% block main_block %}
     {% load static %}
 
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"> Blog</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+
+                            <a href="/blog/homepage/">
+                                <i class="ti-main-panel"></i>
+                                <p>WebSite</p>
+                            </a>
+                        </li>
+                        <li><a href="#">log out </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     <div class="wrapper">
         <div class="sidebar" data-background-color="white" data-active-color="danger">
 
@@ -66,37 +94,11 @@
                 </ul>
             </div>
         </div>
-    </div>
 
-    <div class="main-panel">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar bar1"></span>
-                        <span class="icon-bar bar2"></span>
-                        <span class="icon-bar bar3"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"> Blog</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
 
-                            <a href="/blog/homepage/">
-                                <i class="ti-main-panel"></i>
-                                <p>WebSite</p>
-                            </a>
-                        </li>
-                        <li><a href="#">log out </a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
 
-    <div class="content">
+
+    <div class="content  col-md-offset-3">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -119,7 +121,9 @@
                                     <tr>
                                         <td>{{post.title}}</td>
                                         <td>{{post.content}}</td>
-                                        <td><img src="{{ post.picture.url }}"></td>
+                                        {% if post.picture %}
+                                            <td><img src="{{ post.picture.url }}"></td>
+                                        {% endif %}
                                         <td>{{post.category}}</td>
                                         <td>{{post.created_at}}</td>
                                         <td>{{post.user}}</td>
@@ -137,7 +141,7 @@
             </div>
         </div>
     </div>
-
+    </div>
 
 {% endblock %}
 

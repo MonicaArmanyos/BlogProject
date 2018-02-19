@@ -5,9 +5,7 @@
 
 }
 */
-.sidebar{
-   background-color: rgba(0,0,0,0.2);
-}
+
 #search{
     width: 400px;
 
@@ -15,4 +13,11 @@
 }
 .search{
  padding-left: 200px;
+}
+
+.content{
+
+}
+.card{
+    background-color:rgba(0,0,0,0.2) ;
 }
