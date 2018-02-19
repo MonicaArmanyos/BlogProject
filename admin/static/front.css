@@ -1,11 +1,12 @@
-
 body{
     background-image: url("../static/1.jpg");
     background-position:center;
     background-attachment: fixed;
-    background-rep
-}
 
+}
+.sidebar{
+   background-color: rgba(0,0,0,0.2);
+}
 #search{
     width: 400px;
 
@@ -13,10 +14,4 @@ body{
 }
 .search{
  padding-left: 200px;
-}
-.posts{
-    padding-top: 400px;
-}
-.navbar-header{
-    background-color:rgba(0,0,0,0.4);
 }

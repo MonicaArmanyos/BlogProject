@@ -8,6 +8,13 @@
 	 padding-left:10%;
 }
 
+body{
+	background-image: url("../static/1.jpg");
+	background-position:center;
+	background-attachment: fixed;
+	 background-repeat: no-repeat;
+
+}
 
 div.form input{
     width: 40%;

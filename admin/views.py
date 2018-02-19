@@ -12,6 +12,7 @@ def dashBoard(request):
 def allPosts(request):
 	context={"allPosts":Posts.objects.all()}
 	return render(request,"posts.html",context)
+
 def addPost(request):
 	form=PostForm()
 	if request.method=="POST":

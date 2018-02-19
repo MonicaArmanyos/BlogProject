@@ -66,6 +66,8 @@
             </ul>
         </div>
     </div>
+        </div>
+    </div>
 
 
     <div class="main-panel">
@@ -92,16 +94,19 @@
                         <li><a href="#">log out </a></li>
                     </ul>
                 </div>
+            </div>
         </nav>
-						 <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Categories</h4>
-                            </div>
-                            <div class="content table-responsive table-full-width" id="tablel">
+
+
+ <div class="content">
+        <div class="container-fluid">
+           <div class="row">
+              <div class="col-md-12">
+                  <div class="card">
+                     <div class="header">
+                           <h4 class="title">Categories</h4>
+                     </div>
+     <div class="content table-responsive table-full-width" id="tablel">
 	<table border="0"class="table table-striped" >
 		<th>Category</th>
 		<th>Subscribers</th>		
@@ -116,8 +121,12 @@
 		</tr>
 		{%  endfor  %}
 	</table>
+
+                                <button class="btn btn-info"><a href = "/admin/addCategory">Add Category</a></button>
+
 	</div>
-                            <button class="btn btn-info"><a href = "/admin/addCategory">Add Category</a></button></div>
+
 {% endblock %}
+
 </body>
 </html>

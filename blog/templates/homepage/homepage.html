@@ -5,8 +5,11 @@
     <title>Home</title>
 </head>
 <body>
+
 {% extends "homepage/base.html" %}
+
 {% block main_block %}
+ {% include 'homepage/navbar.html' %}
     {% load static %}
     <div class="wrapper" >
     <div class="container">
@@ -30,11 +33,14 @@
 
 <br>
 
-                    {% if Category.id in subcat %}
+
+                   {% if user.is_authenticated %}
+                        {% if Category.id in subcat %}
                         <a>  <button class="subs"  value="{{Category.id}}">Unsubscribe</button></a>
-                    {% else %}
+                        {% else %}
                         <a>  <button class="subs"  value="{{Category.id}}">Subscribe</button></a>
-                    {% endif %}
+                        {% endif %}
+                   {% endif %}
 
                 </ul>
                 </ul>
@@ -43,6 +49,8 @@
         </div>
     </div>
 
+
+
         <div class="posts col-md-9">
             <h3 >Top Posts</h3>
 
@@ -50,7 +58,12 @@
 
                 <h5 href="#">{{Post.title}}</h5>
 
-                <div><img src="{{post.picture.url}}"></div>
+                <div>
+                    {% if post.picture %}
+                    <img src="{{post.picture.url}}">
+                    {% endif %}
+                </div>
+
                 <div>
                     <p> {{Post.content}} </p>
                 </div>
@@ -61,15 +74,15 @@
     </div>
 
 
-{% endblock %}
+
 </div>
 </div>
 <div class="pagination">
     <span class="step-links">
         {% if allPosts.has_previous %}
             <a href="?page=1">&laquo; first</a>
-            <a href="?page={{
-                    allPosts.previous_page_number }}">previous</a>
+            <a href="?page={
+                    allPosts.previous_page_number }">previous</a>
         {% endif %}
 
         <span class="current">
@@ -82,5 +95,6 @@
         {% endif %}
     </span>
 </div>
+{% endblock %}
 </body>
 </html>
