@@ -42,7 +42,7 @@
           {%csrf_token%}
   	  	  {{form.as_p}}
             <textarea class="rep" id="{{comment.id}}" cols="30" rows="3" placeholder="Reply"></textarea>
-            <input class="reply" data-post="{{post.id}}"  data-user="{{post.user.id}}" data-comment="{{comment.id}}" type="button" value="Post">
+            <input class="reply" data-post="{{post.id}}"  data-user="{{post.user.id}}" data-comment="{{comment.id}}" type="button" value="Post" username="post.user.username">
         </form>
         {% endif %}
 
@@ -78,7 +78,7 @@
   	  	{{form.as_p}}
 
         <textarea id="txt" cols="30" rows="3" placeholder="Add comment"></textarea>
-        <input data-user="{{post.user.id}}" data-post="{{post.id}}" id="post"  type="submit" value="Post">
+        <input data-user="{{post.user.id}}" data-post="{{post.id}}" id="post"  type="submit" value="Post" username="post.user.username">
         </form>
 
 

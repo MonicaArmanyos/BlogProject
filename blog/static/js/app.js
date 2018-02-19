@@ -20,6 +20,7 @@ $(document).ready(function(){
         var userId=this.getAttribute('data-user');
         var postId=this.getAttribute('data-post');
         var commText=$("#"+commentId).val();
+        var username=this.getAttribute('username')
         alert(commText);
         $.ajax({
             url:"/blog/reply?comment="+commText+"&comId="+commentId+"&user="+userId,
@@ -31,6 +32,8 @@ $(document).ready(function(){
             success:function()
             {
                 location.href="http://127.0.0.1:8000/blog/post/"+postId
+
+
 
             },
             error:function()
