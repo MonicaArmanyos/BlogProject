@@ -19,9 +19,5 @@ urlpatterns = [
     url(r'^addTag/$', views.addTag),
     url(r'^editTag/(?P<tag_id>[0-9]+)/$', views.editTag),
     url(r'^deleteTag/(?P<tag_id>[0-9]+)/$', views.deleteTag),
-    url(r'^allUsers/$', views.allUsers),
-    url(r'^blockUser/(?P<user_id>[0-9]+)/$', views.blockUser),
-    url(r'^unblockUser/(?P<user_id>[0-9]+)/$', views.unblockUser),
-    url(r'^promoteUser/(?P<user_id>[0-9]+)/$', views.promoteUser),
     
 ]
