@@ -137,14 +137,14 @@
                                         <td>{{post.created_at}}</td>
 
                                         <td>{% for i in post.tag.all %}{{i.tag_name}}{% endfor %}</td>
-                                        <td><button class="btn btn-info"><a href = "/admin/editPost/{{post.id}}">Edit </a></button></td>
-                                        <td><button class="btn btn-info"><a href = "/admin/deletePost/{{post.id}}">Delete </a></button></td>
+                                        <td><a href = "/admin/editPost/{{post.id}}" class="btn btn-info">Edit </a></td>
+                                        <td><a href = "/admin/deletePost/{{post.id}}" class="btn btn-info">Delete </a></td>
                                     </tr>
 
                                 {%  endfor  %}
                             </table>
                         </div>
-                        <button class="btn btn-info"><a href = "/admin/addPost">Add Post</a></button>
+                        <a href = "/admin/addPost" class="btn btn-info">Add Post</a>
                     </div>
                 </div>
             </div>

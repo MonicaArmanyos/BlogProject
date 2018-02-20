@@ -48,11 +48,12 @@
             </div>
         </nav>
     </div>
+<br><br><br> <br><br><br>
 
-
-    <div class="wrapper">
-        <div class="sidebar" data-background-color="white" data-active-color="danger">
-            <div class="sidebar-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="sidebar col-md-6">
+                <div class="sidebar-wrapper col-3">
                 <div class="logo">
                     <a href="#" class="simple-text">
                         Categories
@@ -100,11 +101,8 @@
                 </ul>
             </div>
         </div>
-           <div class="content col-md-offset-12" style="width: 1200px" >
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="card">
+            <div class="col-md-4 offset-2 ">
+                            <div class="card"  style="background-color: rgba(0,0,0,0.4); width: 900px; padding-left: 20px;">
                                 <div class="header">
                                     <h4 class="title text-center" style="color: #3091B2">Categories</h4>
                                 </div>
@@ -118,22 +116,20 @@
                                             <tr>
                                                 <td>{{category.category_name}}</td>
                                                 <td>{% for i in category.user.all %}<br>{{i.username}}{% endfor %}</td>
-                                                <td><button class="btn btn-info"> <a href = "/admin/editCategory/{{category.id}}">Edit </a></button></td>
-                                                <td><button class="btn btn-info"><a href = "/admin/deleteCategory/{{category.id}}">Delete </a></button></td>
+                                                <td> <a href = "/admin/editCategory/{{category.id}}" class="btn btn-info">Edit </a></td>
+                                                <td><a href = "/admin/deleteCategory/{{category.id}}" class="btn btn-info">Delete </a></td>
                                             </tr>
                                         {%  endfor  %}
                                     </table>
 
-                                    <button class="btn btn-info"><a href = "/admin/addCategory">Add Category</a></button>
+                                    <a href = "/admin/addCategory" class="btn btn-info">Add Category</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
         </div>
-
     </div>
+
+
 
 
 {% endblock %}

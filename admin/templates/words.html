@@ -12,7 +12,6 @@
 {% block main_block %}
     {% load static %}
 
-
     <div class="main-panel">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -48,14 +47,12 @@
             </div>
         </nav>
     </div>
+    <br><br><br> <br><br><br>
 
-    <div class="wrapper">
-        <div class="sidebar" data-background-color="white" data-active-color="danger">
-
-
-
-
-            <div class="sidebar-wrapper">
+    <div class="container">
+    <div class="row">
+        <div class="sidebar col-md-6">
+            <div class="sidebar-wrapper col-3">
                 <div class="logo">
                     <a href="#" class="simple-text">
                         Forbidden words
@@ -107,15 +104,12 @@
 
 
 
-    <div class="content  col-md-offset-12" style="width: 900px">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
+        <div class="col-md-4 offset-2 ">
+            <div class="card"  style="background-color: rgba(0,0,0,0.4); width: 900px; padding-left: 20px;">
                         <div class="header">
                             <h4 class="title text-center" style="color: #3091B2">Forbidden Words</h4>
                         </div>
-                        <div class="content table-responsive table-full-width" id="tablel">
+                        <div class="content table-responsive table-full-width" >
                             <table border="0" class="table table-striped">
                                 <th>Forbidden Word</th>
                                 <th>Actions</th>
@@ -123,19 +117,18 @@
                                 {%  for word in allWords  %}
                                     <tr>
                                         <td>{{word.word}}</td>
-                                        <td><button class="btn btn-info"><a href = "/admin/editWord/{{word.id}}">Edit </a></button></td>
-                                        <td><button class="btn btn-info"><a href = "/admin/deleteWord/{{word.id}}">Delete </a></button></td>
+                                        <td><a href = "/admin/editWord/{{word.id}}" class="btn btn-info">Edit </a></td>
+                                        <td><a href = "/admin/deleteWord/{{word.id}}" class="btn btn-info">Delete </a></td>
                                     </tr>
                                 {%  endfor  %}
                             </table>
                         </div>
-                        <button class="btn btn-info"><a href = "/admin/addWord">Add Word</a></button>
+                        <a href = "/admin/addWord" class="btn btn-info">Add Word</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+
 {% endblock %}
 
 </body>

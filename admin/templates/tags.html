@@ -46,12 +46,10 @@
             </div>
         </nav>
     </div>
-    <div class="wrapper">
-        <div class="sidebar" data-background-color="white" data-active-color="danger">
-
-
-
-
+    <br><br><br> <br><br><br>
+    <div class="container">
+    <div class="row">
+        <div class="sidebar ol-md-6">
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="#" class="simple-text">
@@ -103,12 +101,8 @@
 
 
 
-
-    <div class="content  col-md-offset-12" style="width: 900px">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
+        <div class="ol-md-4 offset-2 ">
+            <div class="card"  style="background-color: rgba(0,0,0,0.4); width: 900px; padding-left: 20px;">
                         <div class="header">
                             <h4 class="title text-center" style="color: #3091B2">Tags</h4>
                         </div>
@@ -120,19 +114,18 @@
                                 {%  for tag in allTags  %}
                                     <tr>
                                         <td>{{tag.tag_name}}</td>
-                                        <td><button class="btn btn-info"><a href = "/admin/editTag/{{tag.id}}">Edit </a></button></td>
-                                        <td><button class="btn btn-info"><a href = "/admin/deleteTag/{{tag.id}}">Delete </a></button></td>
+                                        <td><a href = "/admin/editTag/{{tag.id}}" class="btn btn-info">Edit </a></td>
+                                        <td><a href = "/admin/deleteTag/{{tag.id}}" class="btn btn-info">Delete </a></td>
                                     </tr>
                                 {%  endfor  %}
                             </table>
                         </div>
-                        <button class="btn btn-info"><a href = "/admin/addTag">Add Tag</a></button></div>
+                        <a href = "/admin/addTag" class="btn btn-info">Add Tag</a></div>
 
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+
 
 
 {% endblock %}

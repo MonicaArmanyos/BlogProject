@@ -9,56 +9,56 @@
 {% block main_block %}
     {% load static %}
     <form>
-        <input type="button" value="Back To Home" style="color: #d88715; background-color: #8ECFD5; border-radius: 15px; size: 40px;"  onclick="window.location.href='/blog/homepage/'" />
+        <input type="button" value="Back To Home" style="color: #d88715; background-color: #8ECFD5; border-radius: 15px; size: 40px;"  onclick="window.location.href = '/blog/homepage/'" />
     </form>
 
-        <div class="content col-md-offset-2 text-center" style="width: 1600px; background-color:rgba(0,0,0,0.5)" >
-                    <div class="col-md-8 " style="width: 1000px; background-color:rgba(0,0,0,0.5); ">
+    <div class="content col-md-offset-2 text-center" style="width: 1600px; background-color:rgba(0,0,0,0.5)" >
+        <div class="col-md-8 " style="width: 1000px; background-color:rgba(0,0,0,0.5); ">
 
-                            <div class="header">
-                                <h1 style="color: #d88715">{{post.title}}</h1>
-                            </div>
-                            <div class="category" style="color: #8ECFD5;  font-size: 25px;">
-                                Category: {{category}}
+            <div class="header">
+                <h1 style="color: #d88715">{{post.title}}</h1>
+            </div>
+            <div class="category" style="color: #8ECFD5;  font-size: 25px;">
+                Category: {{category}}
 
-                            </div>
-                            <div class="tag" style="  font-size: 20px; background-color:#8ECFD5 ;">Tags:
-                                {% for i in post.tag.all %}{{i.tag_name}}{% endfor %}
-                            </div>
-<div class="container">
-    <div class="row"></div>
-                            <div class="col-lg-2" >
-                                <img src="{{post.picture.url}}" style="width: 300px;height:300px;">
-                            </div>
-    <div class="col-lg-10">
-        <div class="col-lg-2"></div>
-                            <div class="col-lg-6" style="color: white;  font-size: 20px;">{{post.content}}</div>
-        <div class="col-lg-2"></div>
-</div>
-  </div>
+            </div>
+            <div class="tag" style="  font-size: 20px; background-color:#8ECFD5 ;">Tags:
+                {% for i in post.tag.all %}{{i.tag_name}}{% endfor %}
+            </div>
+            <div class="container">
+                <div class="row"></div>
+                <div class="col-lg-2" >
+                    <img src="{{post.picture.url}}" style="width: 300px;height:300px;">
+                </div>
+                <div class="col-lg-10">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-6" style="color: white;  font-size: 20px;">{{post.content}}</div>
+                    <div class="col-lg-2"></div>
+                </div>
+            </div>
 
-                                {% if  user.is_authenticated %}
-                                <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.id}}">
+            {% if  user.is_authenticated %}
+                <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.id}}">
 
-                                    {% if userlike == 1 %}
-                                    <span class="marklike ">liked</span>
-                                    {%else%}
-                                        <span class="marklike ">like</span>
-                                    {%endif%}
+                {% if userlike == 1 %}
+                    <span class="marklike ">liked</span>
+                {%else%}
+                    <span class="marklike ">like</span>
+                {%endif%}
 
-                                </a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.id}}">
+            </a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.id}}">
 
-                                    {% if userdislike == 1 %}
-                                        <span class="markdislike ">disliked</span>
-                                    {%else%}
-                                        <span class="markdislike ">dislike</span>
-                                    {%endif%}
-                            {% endif %}
+                {% if userdislike == 1 %}
+                    <span class="markdislike ">disliked</span>
+                {%else%}
+                    <span class="markdislike ">dislike</span>
+                {%endif%}
+            {% endif %}
 
-                                </a></p>
-                    </div>
+            </a></p>
+        </div>
 
-                            </div>
+    </div>
 
 
 
