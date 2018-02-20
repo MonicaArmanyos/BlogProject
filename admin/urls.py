@@ -24,5 +24,7 @@ urlpatterns = [
     url(r'^blockUser/(?P<user_id>[0-9]+)/$', views.blockUser),
     url(r'^unblockUser/(?P<user_id>[0-9]+)/$', views.unblockUser),
     url(r'^promoteUser/(?P<user_id>[0-9]+)/$', views.promoteUser),
+    url(r'^editUser/(?P<user_id>[0-9]+)/$', views.editUser),
+    url(r'^deleteUser/(?P<user_id>[0-9]+)/$', views.deleteUser),
     
 ]

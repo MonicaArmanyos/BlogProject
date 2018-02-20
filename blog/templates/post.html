@@ -8,87 +8,127 @@
 {% extends "homepage/base.html" %}
 {% block main_block %}
     {% load static %}
-<div>
-    Category: {{category}}
+    <form>
+        <input type="button" value="Back To Home" style="color: #d88715; background-color: #8ECFD5; border-radius: 15px; size: 40px;"  onclick="window.location.href='/blog/homepage/'" />
+    </form>
 
+        <div class="content col-md-offset-2 text-center" style="width: 1600px; background-color:rgba(0,0,0,0.5)" >
+                    <div class="col-md-8 " style="width: 1000px; background-color:rgba(0,0,0,0.5); ">
+
+                            <div class="header">
+                                <h1 style="color: #d88715">{{post.title}}</h1>
+                            </div>
+                            <div class="category" style="color: #8ECFD5;  font-size: 25px;">
+                                Category: {{category}}
+
+                            </div>
+                            <div class="tag" style="  font-size: 20px; background-color:#8ECFD5 ;">Tags:
+                                {% for i in post.tag.all %}{{i.tag_name}}{% endfor %}
+                            </div>
+<div class="container">
+    <div class="row"></div>
+                            <div class="col-lg-2" >
+                                <img src="{{post.picture.url}}" style="width: 300px;height:300px;">
+                            </div>
+    <div class="col-lg-10">
+        <div class="col-lg-2"></div>
+                            <div class="col-lg-6" style="color: white;  font-size: 20px;">{{post.content}}</div>
+        <div class="col-lg-2"></div>
 </div>
-<div>Tags:
-    {% for i in post.tag.all %}{{i.tag_name}}{% endfor %}
-</div>
-<h1>{{post.title}}</h1>
-<div>
-    <img src="{{post.picture.url}}">
-</div>
-<div>{{post.content}}</div>
-<div id="comments">
+  </div>
+
+                                {% if  user.is_authenticated %}
+                                <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.id}}">
+
+                                    {% if userlike == 1 %}
+                                    <span class="marklike ">liked</span>
+                                    {%else%}
+                                        <span class="marklike ">like</span>
+                                    {%endif%}
+
+                                </a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.id}}">
+
+                                    {% if userdislike == 1 %}
+                                        <span class="markdislike ">disliked</span>
+                                    {%else%}
+                                        <span class="markdislike ">dislike</span>
+                                    {%endif%}
+                            {% endif %}
+
+                                </a></p>
+                    </div>
+
+                            </div>
+
+
+
+
+    <div class="modal fade" id="exampleModal" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">info</h5>
+                    <button type="button" class="close" data-dismiss="modal" >
+                        <span >&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    This Post Has Been Deleted !!
+                </div>
+                <div class="modal-footer">
+                    <a  href="/blog/homepage" class="btn btn-secondary" >Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h2>Comments:</h2>
-     {% for comment in comments %}
-   <div>
-       <div> {{comment.user}}</div>
-       <div> {{comment.created_at}}</div>
-       <div> {{comment.text}}</div>
 
-        {% for reply in replies %}
-            {% if reply.comment_id == comment.id %}
+    <div id="comments">
 
-               Reply from: <div> {{reply.user}}</div>
-                <div> {{reply.created_at}}</div>
-                <div> {{reply.text}}</div>
+        {% for comment in comments %}
+            <div>
+                <div> {{comment.user}}</div>
+                <div> {{comment.created_at}}</div>
+                <div> {{comment.text}}</div>
 
-            {% endif %}
+
+                <div id="replies{{comment.id}}">
+                    {% for reply in replies %}
+                        {% if reply.comment_id == comment.id %}
+                            Reply from: <div> {{reply.user}}</div>
+                            <div> {{reply.created_at}}</div>
+                            <div> {{reply.text}}</div>
+
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% if  user.is_authenticated %}
+
+                    <textarea class="rep" id="{{comment.id}}" cols="30" rows="3" placeholder="Reply"></textarea>
+                    <button class="reply" data-post="{{post.id}}"  data-user="{{post.user.id}}" data-comment="{{comment.id}}" type="submit"  username="{{post.user.username}}">Reply</button>
+
+                {% endif %}
+
+            </div>
+
         {% endfor %}
-        {% if  user.is_authenticated %}
-        <form  method="post" >
-          {%csrf_token%}
-  	  	  {{form.as_p}}
-            <textarea class="rep" id="{{comment.id}}" cols="30" rows="3" placeholder="Reply"></textarea>
-            <input class="reply" data-post="{{post.id}}"  data-user="{{post.user.id}}" data-comment="{{comment.id}}" type="button" value="Post" username="post.user.username">
-        </form>
-        {% endif %}
-
-   </div>
-    <br/>
-    <hr/>
-    <br/>
-    {% endfor %}
-
-    <p><span style="margin-right:10px" id="slike">{{plikes}}</span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.id}}">
-
-             {% if userlike == 1 %}
-            <span class="marklike">liked</span>
-             {%else%}
-            <span class="marklike">like</span>
-             {%endif%}
-
-         </a><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.id}}">
-
-             {% if userdislike == 1 %}
-             <span class="markdislike">disliked</span>
-             {%else%}
-            <span class="markdislike">dislike</span>
-             {%endif%}
-
-
-         </a></p>
-
-
-     {%if user.is_authenticated %}
-         <form id="comment"  method="post" >
-         {%csrf_token%}
-  	  	{{form.as_p}}
-
+    </div>
+    {%if user.is_authenticated %}
         <textarea id="txt" cols="30" rows="3" placeholder="Add comment"></textarea>
-        <input data-user="{{post.user.id}}" data-post="{{post.id}}" id="post"  type="submit" value="Post" username="post.user.username">
-        </form>
-
-
+        <button   data-user="{{post.user.id}}" data-post="{{post.id}}" id="post"  type="submit"  username="{{post.user.username}}">Comment</button>
     {% endif %}
 
-</div>
-    <script src="{%static 'jquery-1.10.2.js' %}"></script>
- <script src="{% static 'js/app.js' %}"></script>
-    <script src="{%static 'jquery/ajax.js' %}"></script>
-    <script src="{%static 'jquery/ajax2.js' %}"></script>
+
+
+
+    <script src="{% static 'moment.min.js' %}"></script>
+    <script src="{% static 'jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'jquery/ajax.js' %}"></script>
+    <script src="{% static 'jquery/ajax2.js' %}"></script>
 
 {% endblock %}
 </body>

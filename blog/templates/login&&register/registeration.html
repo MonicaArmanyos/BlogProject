@@ -1,31 +1,40 @@
-<!DOCTYPE html>
 
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
 
-<!DOCTYPE html>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+</head>
+<body >
 {% extends "homepage/base.html" %}
 {% block main_block %}
- {% load static %}
-<div class="container">
+{% load static %}
+
+
+    <div class="container text-center">
   {% if dublemail == 1 %}
      <div class="alert alert-danger alert-dismissable" width="300">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
     <strong>Danger!</strong> this email is exists
-  </div>
+    </div>
 
 {%endif%}
-    <h1>register here</h1>
+    <h1>Register here</h1>
     <form method="post">
        {% csrf_token %}
+        <div class="form">
         {{ form.as_p }}
 
 
-<input type="submit" name="submit" value="Register">
+        </div>
+
+<button class="btn" type="submit" name="submit" value="Register" style="border-radius: 10px;">Register</button>
     </form>
 
-
-</div>
-
-
-
+    </div>
 
 {% endblock%}
+</body>
+</html>

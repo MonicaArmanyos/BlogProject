@@ -96,19 +96,21 @@
 
 
 
-    <div class="content  col-md-offset-3">
+    <div class="content  col-md-offset-3" style="width: 900px">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Tags</h4>
+                            <h4 class="title text-center" style="color: #3091B2">Tags</h4>
                         </div>
                         <div class="content table-responsive table-full-width" id="tablel">
                             <table border="0" class="table table-striped">
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Actions</th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 {%  for user in allUsers  %}
                                     <tr>
@@ -119,6 +121,8 @@
                                             <td>{{user.username}} </td>
 
                                             <td>{{user.email}}</td>
+                                            <td><button class="btn btn-info"><a href = "/admin/editUser/{{user.id}}">Edit </a></button></td>
+                                            <td><button class="btn btn-info"><a href = "/admin/deleteUser/{{user.id}}">Delete </a></button></td>
                                             {% if user.is_active == 1 %}
                                                 <td><a href = "/admin/blockUser/{{user.id}}">Block </a></td>
                                                 <td><a href = "/admin/promoteUser/{{user.id}}">Promote User </a></td>

@@ -45,9 +45,9 @@ def search(request):
         tag = Tags.objects.get(tag_name__contains=request.GET['term'])
         found_postt = Posts.objects.filter(tag=tag.id)
     except:
-        return render(request, "search.html", {'allPosts': found_posts, 'allCategories': Categories.objects.all()})
+        return render(request, "homepage/search.html", {'allPosts': found_posts, 'allCategories': Categories.objects.all()})
     else:
-        return render(request, "search.html", {'allPosts': found_postt, 'allCategories': Categories.objects.all()})
+        return render(request, "homepage/search.html", {'allPosts': found_postt, 'allCategories': Categories.objects.all()})
 
 
 def getCategoryPosts(request, cat_id):
@@ -108,8 +108,7 @@ def post(request,post_id):
 
 
     ctg=Categories.objects.get(id=pst.category_id)
-    #Alltags=pst.post_tags.filter(post=post_id)
-    #or Alltags=pst.post_tags.all() would also give all the tags of the post
+
     forbiddenWords=[]
     Rej_words=ForbiddenWords.objects.all()
     for word in Rej_words:
@@ -130,9 +129,8 @@ def post(request,post_id):
             if replyWord in forbiddenWords:
                 replyWord='*'*len(replyWord)
             reply.text+=" "+replyWord
-    context={'post':pst,'category':ctg.category_name,'comments':comments,'replies':replies, "plikes":countlikes ,"pdislike":countdislike ,"userlike":isliked,"userdislike":isdisliked}
+    context={'post':pst,'category':ctg.category_name,'comments':comments,'replies':replies,"plikes":countlikes ,"pdislike":countdislike ,"userlike":isliked,"userdislike":isdisliked}
     return render(request, 'post.html',context)
-
 
 def comment(request):
     comm = request.GET.get('comment', None)
@@ -142,7 +140,22 @@ def comment(request):
     pstObj=Posts.objects.get(id=postFk)
     cObj=Comments(user=userObj, post=pstObj, text=comm)
     cObj.save()
-    return JsonResponse({'foo': 'bar'})
+
+    lastComment=Comments.objects.filter().order_by('-id')[0]
+
+    forbiddenWords=[]
+    Rej_words=ForbiddenWords.objects.all()
+    for word in Rej_words:
+        forbiddenWords.append(word.word)
+    words=lastComment.text.split()
+    lastComment.text=""
+    for comm_word in words:
+        if comm_word in forbiddenWords:
+            comm_word='*'*len(comm_word)
+        lastComment.text+=" "+comm_word
+
+    commentJson={'commentText':lastComment.text,'commentId':lastComment.id}
+    return JsonResponse(commentJson,safe=False)
 
 
 def reply(request):
@@ -158,8 +171,21 @@ def reply(request):
     replyObj=Replies(user=userObj , comment=commentObj , text =comm)
     replyObj.save()
 
-    return JsonResponse({'foo': 'bar'})
+    lastReply=Replies.objects.filter().order_by('-id')[0]
 
+    forbiddenWords=[]
+    Rej_words=ForbiddenWords.objects.all()
+    for word in Rej_words:
+        forbiddenWords.append(word.word)
+    words=lastReply.text.split()
+    lastReply.text=""
+    for comm_word in words:
+        if comm_word in forbiddenWords:
+            comm_word='*'*len(comm_word)
+        lastReply.text+=" "+comm_word
+
+    replyJson={'replyText':lastReply.text,'replyId':lastReply.id}
+    return JsonResponse(replyJson,safe=False)
 
 def makelike(request,post_id):
     if request.user.is_authenticated():
@@ -211,7 +237,24 @@ def makedislike(request,post_id):
         postdel = Likes.objects.filter(state=0, post=pst).count()
         if postdel >= 10:
             pst.delete()
-            return HttpResponseRedirect("homepage/homepage.html")
+            responseData = {
+                'json': True,
+                'del' :1
+            }
+
+            return JsonResponse(responseData, safe=False)
+
+
+
+
+
+
+
+
+
+    return JsonResponse({'foo': 'bar'})
+
+
 
 
 

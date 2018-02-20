@@ -19,7 +19,7 @@ def addPost(request):
 		form=PostForm(request.POST,request.FILES)
 		if form.is_valid():
 			form.save()
-	                return HttpResponseRedirect('/admin/allPosts')
+	        return HttpResponseRedirect('/admin/allPosts')
 	return render(request,"newPost.html",{'form':form})
 	
 	
@@ -145,6 +145,23 @@ def addUser(request):
 			form.save()
 			return HttpResponseRedirect('/admin/allUsers')
 	return render(request,"newuser.html",{'form':form})
+
+def editUser(request,user_id):
+	form=UserForm()
+	user=User.objects.get(id=user_id)
+	if request.method=="POST":
+		form=UserForm(request.POST,instance=user)
+		if form.is_valid():
+			form.save()
+		return HttpResponseRedirect('/admin/allUsers')
+	else:
+		form=UserForm(instance=user)
+	return render(request,"editUser.html",{'form':form})
+
+def deleteUser(request,user_id):
+	user=User.objects.get(id=user_id)
+	user.delete()
+	return HttpResponseRedirect('/admin/allUsers')
 
 def blockUser(request,user_id):
     user=User.objects.get(id=user_id)

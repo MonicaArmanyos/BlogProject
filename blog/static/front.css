@@ -3,7 +3,7 @@ body{
     background-image: url("../static/1.jpg");
     background-position:center;
     background-attachment: fixed;
-    background-rep
+    background-repeat: no-repeat;
 }
 
 #search{
@@ -16,7 +16,15 @@ body{
 }
 .posts{
     padding-top: 400px;
+
 }
-.navbar-header{
-    background-color:rgba(0,0,0,0.4);
+
+.sidebar{
+    background-color: white;
+}
+.dpost {
+    display: inline;
+}
+#txt{
+    color: black;
 }

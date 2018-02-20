@@ -1,7 +1,7 @@
 @mixin sidebar-background-color($background-color, $font-color){
     &:after,
     &:before{
-	    background-color:rgba(0,0,0,0.4);
+	    background-color:white;
 	}
 
     .logo{
@@ -23,7 +23,7 @@
             }
         }
         .divider{
-            background-color: rgba(0,0,0,0.4);
+            background-color:white;
         }
         
     }
