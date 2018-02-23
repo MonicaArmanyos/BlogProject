@@ -1,0 +1,73 @@
+<html>
+<head>
+
+</head>
+<body>
+<div class="main-panel">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar bar1"></span>
+                    <span class="icon-bar bar2"></span>
+                    <span class="icon-bar bar3"></span>
+                </button>
+                <a class="navbar-brand" href="#">  Blog </a>
+            </div>
+
+
+            <div class="collapse navbar-collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/homepage/">Home</a>
+                    </li>
+                    {%if user.is_authenticated %}
+
+
+                     {% else %}
+                        <li class="nav-item">
+                        <a class="nav-link"  href="/blog/register">Signup</a>
+                        </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link"  href="/blog/logout">logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link"  href="/blog/login">login</a>
+                        </li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link"  href="/admin/dashboard">Manage website</a>
+                        </li>
+
+                    {%endif%}
+                </ul>
+                <div class="text-center">
+                    <ul >
+                        <li >
+                            <div class="collapse navbar-collapse">
+                                <form method="GET" action="/blog/homepage/search/" class="search">
+
+                                    <input type="search" class="form-control" id="search" name="term" placeholder="Search for...">
+
+                                </form>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+</div>
+
+
+</body>
+</html>

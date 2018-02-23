@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+</head>
+<body>
+{% extends "homepage/base.html" %}
+{% block main_block %}
+    {% load static %}
+    <br>
+    <form>
+        <input type="button" value="Back To Home" style=" font-weight: bold; color: #d88715;position: fixed; background-color: #8ECFD5; border-radius: 15px; size: 40px;"  onclick="window.location.href = '/blog/homepage/'" />
+    </form>
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8" style=" background-color:rgba(0,0,0,0.5); margin-left: 200px;">
+
+                <h1 class="text-center" style="color: #d88715">{{post.title}}</h1>
+
+                <div class="category text-center" style="color: #8ECFD5;  font-size: 25px;">
+                    Category: {{category}}
+
+                </div>
+
+                <div class="tag text-center" style="  font-size: 20px; background-color:#8ECFD5 ;">Tags:
+                    {% for i in post.tag.all %} {{i.tag_name}} {% endfor %}
+                </div>
+                <img src="{{post.picture.url}}" style="width: 750px;height:350px; margin-right:10px;">
+
+
+
+                <div class="col-lg-12" style="color: white;  font-size: 24px;">{{post.content}}</div>
+
+            </div>
+
+        </div>
+
+    <div class="row">
+        <div class="text-center col-md-8" style=" background-color:#afd9ee; margin-left: 200px; margin-bottom: 30px;
+padding-bottom: 20px;
+" >
+            <div class="like" style="display: inline">
+                <br>
+                {% if  user.is_authenticated %}
+                    <p> <i class="ti-hand-point-up " style="color: white;"></i> <span style="margin-right:10px;" id="slike">
+                            {{plikes}} </span><a id="like" style="cursor:pointer ; margin-right:30px" data-post="{{post.id}}">
+
+                    {% if userlike == 1 %}
+                        <span class="marklike ">liked</span>
+                    {%else%}
+                        <span class="marklike ">like</span>
+                    {%endif%}
+
+                </a>
+
+                    <i class="ti-hand-point-down" style="color: white;"></i><span id="sdislike" style="margin-right:10px">{{pdislike}}</span><a id="dislikepo" style="cursor:pointer" data-post="{{post.id}}">
+
+                    {% if userdislike == 1 %}
+                        <span class="markdislike ">disliked</span>
+                    {%else%}
+                        <span class="markdislike ">dislike</span>
+                    {%endif%}
+                {% endif %}
+
+                </a></p>
+
+            </div>
+            <div>
+                {%if user.is_authenticated %}
+                    <textarea id="txt" cols="30" rows="3" placeholder="  Add a Comment" style="border-radius: 20px;"></textarea>
+                    <button  style="border-radius: 10px;" data-user="{{user.id}}" data-post="{{post.id}}" id="post"  type="submit"  username="{{user.username}}">Comment</button>
+                {% endif %}
+            </div>
+    </div>
+    </div>
+
+            <h2 style="color: #d88715; font-size: 34px; font-weight: bold;" class="text-center">Comments</h2>
+
+
+
+
+                <div id="comments"  >
+
+                    {% for comment in comments %}
+                        <br>
+                        <div class="text-center"  style=" background-color: rgba(0,0,0,0.3); width: 700px; margin-left: 230px">
+                            <div style="font-size:25px; color:white; font-weight: bold;"> {{comment.user}}</div>
+                            <div style="color: black; font-size: 12px;"> {{comment.created_at}}</div>
+                            <br>
+                            <div style="font-size:19px; color:#b8daff;font-weight: bold; "> {{comment.text}}</div>
+                            <br>
+                        </div>
+
+
+                          <div  id="replies{{comment.id}}" style="color:white; width: 500px; margin-left: 330px">
+                            {% for reply in replies %}
+                                <div class="text-center"  style="color:black;background-color: rgba(0,0,0,0.1);">
+                                {% if reply.comment_id == comment.id %}
+                                    <div style="font-size:18px; color:white; font-weight: bold;"> {{reply.user}}</div>
+                                    <div style="color: black; font-size: 12px;"> {{reply.created_at}}</div>
+                                    <br>
+                                    <div style="font-size:17px; color:#d58512;font-weight: bold; "> {{reply.text}}</div>
+
+                                     <br>
+
+                                 {% endif %}
+                                </div>
+
+
+                            {% endfor %}
+                          </div>
+
+                     <br>
+
+                      <div class= "text-center" >
+
+                        {% if  user.is_authenticated %}
+
+                            <textarea class="rep" id="{{comment.id}}" cols="30" rows="3" placeholder="  Reply To Comment" style="border-radius: 20px;"></textarea>
+                            <button style="border-radius: 10px;" class="reply" data-post="{{post.id}}"  data-user="{{user.id}}" data-comment="{{comment.id}}" type="submit"  username="{{user.username}}">Reply</button>
+
+                        {% endif %}
+                  </div>
+
+                    {% endfor %}
+                </div>
+
+    </div>
+        </div>
+
+
+
+
+    <div class="modal fade" id="exampleModal" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: red">Alert</h5>
+
+                </div>
+                <div class="modal-body">
+                    This Post Has Been Deleted !!
+                </div>
+                <div class="modal-footer">
+                    <a  href="/blog/homepage" class="btn btn-danger" >Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="{% static 'moment.min.js' %}"></script>
+    <script src="{% static 'jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'app.js' %}"></script>
+    <script src="{% static 'jquery/ajax.js' %}"></script>
+    <script src="{% static 'jquery/ajax2.js' %}"></script>
+
+{% endblock %}
+</body>
+</html>

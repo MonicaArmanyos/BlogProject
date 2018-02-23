@@ -1,0 +1,22 @@
+body{
+    background-image: url("../static/1.jpeg");
+    background-position:center;
+    background-attachment: fixed;
+
+}
+
+
+#search{
+    width: 400px;
+
+
+}
+.search{
+ padding-left: 200px;
+}
+
+.content{
+
+}
+
+

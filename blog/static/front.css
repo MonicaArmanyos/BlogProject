@@ -1,0 +1,30 @@
+
+body{
+    background-image: url("../static/1.jpeg");
+    background-position:center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+#search{
+    width: 400px;
+
+
+}
+.search{
+ padding-left: 200px;
+}
+.posts{
+    padding-top: 400px;
+
+}
+
+.sidebar{
+    background-color: white;
+}
+.dpost {
+    display: inline;
+}
+#txt{
+    color: black;
+}

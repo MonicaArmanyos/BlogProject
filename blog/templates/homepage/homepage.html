@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+{% extends "homepage/base.html" %}
+{% block main_block %}
+    {% include 'homepage/navbar.html' %}
+    {% load static %}
+
+
+    <div class="container">
+        <div class="row " style="padding-left: 300px; width: 170%; height: auto;">
+            <div class="sidebar col-md-4" style="position: fixed">
+                <div class="sidebar-wrapper col-3 " style="position: fixed">
+                    <div class="logo">
+                        <h3 class="text-center">Categories</h3>
+                    </div>
+                    <ul class="nav">
+
+                        {% for Category in allCategories %}
+
+                            <ul class="list-styled components">
+                                <li><a href="/blog/homepage/{{ Category.id }}">{{ Category.category_name }}</a></li>
+
+                                <br>
+
+
+                                {% if user.is_authenticated %}
+                                    {% if Category.id in subcat %}
+                                        <a>
+                                            <button class="subs " style="border-radius: 15px" value="{{ Category.id }}">Unsubscribe</button>
+                                        </a>
+                                    {% else %}
+                                        <a>
+                                            <button class="subs " style="border-radius: 15px" value="{{ Category.id }}">Subscribe</button>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+
+                            </ul>
+                            </ul>
+                        {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-6  text-center" style="background-color: rgba(0,0,0,0.4); ">
+
+                <br><br>
+                <h4 class="title text-center" style="color: #3091B2; font-size: 44px; font-weight: bold;">Top Posts</h4>
+
+                <div class="card" style="background-color: rgba(0,0,0,0.4); height: auto;">
+
+                    {% for Post in allPosts %}
+                        <figure class="dpost  col-md-12" style="height: auto; ">
+                            <h5 style="font-size: 26px; color: #d88715; font-weight: bold; ">{{ Post.title }}</h5>
+                            {% if Post.picture %}
+                                <a href="/blog/post/{{ Post.id }}">
+                                    <img src="{{ Post.picture.url }}" width="560" height="280"></a>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2" style="font-size: 18px; color: white;"> {{ Post.content }} </div>
+                            </div>
+                            <hr >
+                        </figure>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="pagination" style="  margin-left: 300px;">
+            <span class="step-links">
+                {% if allPosts.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={
+                   allPosts.previous_page_number }">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ allPosts.number }} of {{ allPosts.paginator.num_pages }}.
+                </span>
+
+                {% if allPosts.has_next %}
+                    <a href="?page={{ allPosts.next_page_number }}">next</a>
+                    <a href="?page={{ allPosts.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+    </div>
+{% endblock %}
+</body>
+</html>

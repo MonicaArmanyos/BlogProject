@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+</head>
+<body>
+{% extends "base.html" %}
+{% block main_block %}
+    {% load static %}
+    {% if user.is_superuser %}
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"> Blog</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+
+                            <a href="/blog/homepage/">
+                                <i class="ti-main-panel"></i>
+                                <p>Website</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+    <div class="row">
+        <div class="sidebar col-md-6" style="position: fixed;">
+            <div class="sidebar-wrapper col-3" style="position: fixed;">
+                <div class="logo">
+                    <a href="#" class="simple-text">
+                        Posts
+                    </a>
+                </div>
+
+                <ul class="nav">
+                    <li >
+                        <a href="/admin/dashboard">
+                            <i></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allUsers">
+                            <i class="ti-user"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="/admin/allCategories">
+                            <i class="ti-panel"></i>
+                            <p>Categories </p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/allPosts">
+                            <i class="ti-view-list-alt"></i>
+                            <p> Posts</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allWords">
+                            <i class="ti-text"></i>
+                            <p>Forbidden Words</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allTags">
+                            <i class="ti-pencil-alt2"></i>
+                            <p>Tags</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="card" style="background-color: rgba(0,0,0,0.5); width: 90%; margin-left: 15%;">
+
+                            <h4 class="title text-center" style="color: #3091B2">Posts</h4>
+
+                            <table border="0" class="table table-striped table-responsive"  >
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Picture</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Created_at</th>
+                                <th>Tags</th>
+                                <th>Actions</th>
+                                <th> </th>
+
+                                {%  for post in allPosts  %}
+                                    <tr>
+                                        <td>{{post.title}}</td>
+                                        <td>{{post.content}}</td>
+                                        {% if post.picture %}
+                                            <td><img style="width: 100px; height:100px;" src="{{ post.picture.url }}"></td>
+                                        {% else %}
+                                            <td> </td>
+                                        {% endif %}
+                                        <td>{{post.category}}</td>
+                                        <td>{{post.user}}</td>
+                                        <td>{{post.created_at}}</td>
+
+                                        <td>{% for i in post.tag.all %}{{i.tag_name}}{% endfor %}</td>
+                                        <td><a href = "/admin/editPost/{{post.id}}" class="btn btn-info">Edit </a></td>
+                                        <td><a href = "/admin/deletePost/{{post.id}}" class="btn btn-info">Delete </a></td>
+                                    </tr>
+
+                                {%  endfor  %}
+                            </table>
+            <a href = "/admin/addPost" class="btn btn-info">Add Post</a>
+                        </div>
+
+                    </div>
+                </div>
+    </div>
+
+    {% else %}
+        <h2 class="text-center">You Must Be An Admin</h2>
+        <a class="text-center" href="/blog/homepage/">
+            <i class="ti-main-panel"></i>
+            <h3>Back To Home</h3>
+        </a>
+
+    {% endif %}
+
+{% endblock %}
+
+</body>
+</html>

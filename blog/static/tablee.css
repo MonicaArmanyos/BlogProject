@@ -1,0 +1,31 @@
+div.form input{
+    width: 40%;
+	border-radius: 50px;
+
+}
+
+.container.text-center h1{
+	color:#17a2b8;
+}
+
+div.form label{
+  color:#d88715;
+
+
+}
+div .form span{
+	display:none;
+}
+
+.container.text-center form{
+width: 10%;
+background-color:rgba(0,0,0,0.4);
+position: relative;
+border-radius:40px;
+padding:50px;
+margin-left: 275px;
+}
+
+a:link{
+	text-decoration: none;
+}

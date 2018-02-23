@@ -1,0 +1,151 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+</head>
+<body>
+{% extends "base.html" %}
+{% block main_block %}
+    {% load static %}
+    {% if user.is_superuser %}
+    <div class="main-panel">
+        <nav class="navbar navbar-default "  >
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"> Blog</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+
+                            <a href="/blog/homepage/">
+                                <i class="ti-main-panel"></i>
+                                <p>Website</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+        </nav>
+    </div>
+
+    <div class="container">
+    <div class="row">
+        <div class="sidebar col-md-4" style="position: fixed">
+            <div class="sidebar-wrapper col-3 " style="position: fixed">
+                <div class="logo">
+                    <a href="#" class="simple-text">
+                        Users
+                    </a>
+                </div>
+
+                <ul class="nav">
+                    <li >
+                        <a href="/admin/dashboard">
+                            <i></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/allUsers">
+                            <i class="ti-user"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allCategories">
+                            <i class="ti-panel"></i>
+                            <p>Categories </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allPosts">
+                            <i class="ti-view-list-alt"></i>
+                            <p> Posts</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/allWords">
+                            <i class="ti-text"></i>
+                            <p>Forbidden Words</p>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="/admin/allTags">
+                            <i class="ti-pencil-alt2"></i>
+                            <p>Tags</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
+            <div class="card"  style="background-color: rgba(0,0,0,0.5); width: 80%; margin-left: 17%;">
+                        <div class="header">
+                            <h4 class="title text-center" style="color: #3091B2">Users</h4>
+                        </div>
+                        <div class="content table-responsive table-full-width" id="tablel">
+                            <table border="0" class="table table-striped">
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                {%  for user in allUsers  %}
+                                    <tr>
+                                        {% if user.is_superuser == 1 %}
+                                            <td><font color="red">{{user.username}}</font></td>
+                                            <td><font color="red">{{user.email}}</font></td>
+                                        {% elif user.is_superuser == 0 %}
+                                            <td>{{user.username}} </td>
+
+                                            <td>{{user.email}}</td>
+                                            <td><a href = "/admin/editUser/{{user.id}}" class="btn btn-info">Edit </a></td>
+                                            <td><a href = "/admin/deleteUser/{{user.id}}" class="btn btn-info">Delete </a></td>
+                                            {% if user.is_active == 1 %}
+                                                <td><a href = "/admin/blockUser/{{user.id}}">Block </a></td>
+                                                <td><a href = "/admin/promoteUser/{{user.id}}">Promote User </a></td>
+                                            {% else %}
+                                                <td><a href = "/admin/unblockUser/{{user.id}}">Unblock </a></td>
+                                            {% endif %}
+                                        {% endif %}
+                                    </tr>
+                                {%  endfor  %}
+                            </table>
+                        </div>
+                       <a href = "/admin/addUser" class="btn btn-info">Add User</a></div>
+
+                </div>
+            </div>
+
+    {% else %}
+        <h2 class="text-center">You Must Be An Admin</h2>
+        <a class="text-center" href="/blog/homepage/">
+            <i class="ti-main-panel"></i>
+            <h3>Back To Home</h3>
+        </a>
+
+    {% endif %}
+
+{% endblock %}
+</body>
+</html>
+
